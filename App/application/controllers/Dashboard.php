@@ -21,6 +21,9 @@ class Dashboard extends CI_Controller
             $data['user_id'] = $this->aauth->get_user_id();
             $data['permissions'] = getUserPermissions();
             $data['total_clients_city_wise'] = $this->get_client_city_data();
+            $data['total_clients'] = $this->Dashboard_model->total_clients();
+            $data['stock_value'] = $this->Dashboard_model->get_total_avl_stock_amount();
+            
             
             $data["title"] = "Dashboard";
             $this->load->view('include/inner_header', $data);
@@ -32,7 +35,6 @@ class Dashboard extends CI_Controller
         $data['total_products'] = $this->Dashboard_model->get_products();
         $data['total_payble_amount'] = $this->Dashboard_model->total_payble_amount();
         $data['total_outstanding'] = $this->Dashboard_model->total_outstanding();
-        $data['total_clients'] = $this->Dashboard_model->total_clients();
         $data['sales_outstanding_amount'] = $this->Dashboard_model->sales_outstanding_amount();
         $data['purchase_payable_amount'] = $this->Dashboard_model->purchase_payable_amount();
 

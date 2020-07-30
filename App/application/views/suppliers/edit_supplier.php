@@ -13,7 +13,6 @@ $supplier_orgnisation_phone = array(
   'value' => set_value('supplier_orgnisation_phone',@$details[0]['supplier_orgnisation_phone']),
   'class'=>'form-control',
   'placeholder'=>'Company Phone',
-  'data-parsley-required'=>'true',
   'data-parsley-pattern'=>'\+?\d[\d -]{8,12}\d',
   'data-parsley-pattern-message'=>'Enter valid phone number'
 );
@@ -31,7 +30,6 @@ $gstin = array(
   'value' => set_value('gstin',@$details[0]['gstin']),
   'class'=>'form-control',
   'placeholder'=>'GSTIN',
-  'data-parsley-required'=>'true',
   'data-parsley-pattern'=>'^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$',
   'data-parsley-pattern-message'=>'Enter valid gstin number',
 );
@@ -41,7 +39,6 @@ $supplier_name = array(
   'value' => set_value('supplier_name',@$details[0]['supplier_name']),
   'class'=>'form-control',
   'placeholder'=>'Name',
-  'data-parsley-required'=>'true'
 );
 $supplier_mobile = array(
   'name'  => 'supplier_mobile',

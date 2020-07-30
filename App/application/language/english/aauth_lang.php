@@ -16,6 +16,7 @@ $lang['auth_subject_change_email'] = 'Email Change Request %s';
 $lang['auth_subject_account_updated'] = 'Account Updated';
 $lang['auth_subject_activate'] = 'Activate your Email-Ids';
 $lang['new_reset_password_link'] = 'New password link has been sent to your registered email ID.';
+$lang['auth_subject_send_invoice'] = 'Invoice from %s!';
 
 // Password reset success
 $lang['aauth_email_reset_success_subject'] = 'Successful Pasword Reset';
@@ -206,6 +207,11 @@ $lang['sale_item_update_success'] = 'Sale item has been successsfully updated.';
 $lang['sale_delete_success'] = 'Sale has been successsfully deleted.';
 $lang['sale_item_delete_success'] = 'Sale item has been successsfully deleted.';
 $lang['sale_stock_error'] = 'Something went wrong. Please verify stock details.';
+$lang['email_successfully_sent'] =  'Email has been successsfully sent.';
+$lang['no_email_available'] =  'Please enter email first.';
+
+
+
 
 /*Sales Return*/
 $lang['sale_return_successfully_added'] = 'Sale return has been successsfully added.';
@@ -239,3 +245,6 @@ $lang['payment_added_success'] =  'Payment has been successsfully added.';
 
 /* Payment */
 $lang['receipt_added_success'] =  'Receipt has been successsfully added.';
+
+
+

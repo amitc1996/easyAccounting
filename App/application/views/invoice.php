@@ -167,11 +167,11 @@ table tr td{
  
 }
 #goods_table td {
-padding: 3px 1px 3px 3px;
+padding: 1px 1px 1px 1px;
  
 }
 #goods_table th {
-padding: 3px 1px 3px 3px;
+padding: 1px 1px 1px 1px;
  
 }
 .text-center{

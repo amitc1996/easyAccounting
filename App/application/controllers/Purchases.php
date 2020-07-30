@@ -39,7 +39,7 @@ class Purchases extends CI_Controller
         $data["admin_data"] = $this->checkAccess();   
         $looged_in_user_id=$this->aauth->get_user_id();
         $this->datatables->select('purchases.po_number,purchases.supplier_name,purchases.purchase_date,purchases.paid_amount,purchases.grand_total,purchases.is_paid,purchases.created,purchases.purchase_id')
-        ->where('purchases.is_returned',0)
+        ->where('purchases.is_deleted',0)
         ->from('purchases');
         echo $this->datatables->generate();
     }
@@ -175,6 +175,24 @@ class Purchases extends CI_Controller
         $this->load->view('purchases/view_purchase',$data);
         $this->load->view('include/inner_footer', $data);
     }
+
+     /**
+     *  delete_purchase
+     * */
+      public function delete_purchase($pid){
+        $data["admin_data"] = $this->checkAccess();
+
+        if($stock=$this->Purchase_model->delete_purchase($pid)){
+            $result["status"] = 1;
+            $result["message"] = $this->lang->line('purchase_delete_success');
+
+          }else{
+            $result["status"] = 0;
+            $result["message"] =  $this->lang->line('error_occured');
+          }
+
+        echo json_encode($result);
+     }
 
 
 

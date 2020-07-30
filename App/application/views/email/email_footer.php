@@ -5,7 +5,7 @@
                                                             <td align="Center" style="margin-left: 0px; background-color:#6da252!important">
                                                                 <div>
                                                                     <div id="txtHolder-6" class="txtEditorClass" style="color: #FFFFFF; font-size: 12px; font-family: 'Arial';"><p style="text-align: left;">Copyright &copy; <?php echo date("Y");?> <?php echo $this->config->item('name', 'aauth'); ?> | All Rights Reserved</p>
-                                                                     <img alt="" style=" margin-top: -28px; width:100px; float:right;" src="<?php echo base_url('assets/img/logo-lg-sharp.png');?>"></div>
+                                                                   </div>
                                                                 </div>
                                                             </td>
                                                         </tr>

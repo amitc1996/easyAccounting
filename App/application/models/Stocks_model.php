@@ -25,9 +25,8 @@ class  Stocks_model extends CI_Model{
        );
       if($this->db->insert('stocks',$data)){
        $datas['stock_id']=$this->db->insert_id(); 
-       $datas['action']='Increase Stock';
        $datas['description']='Add Stock';
-       $datas['stock']=$this->input->post("stock");
+       $datas['stock_in']=$this->input->post("stock");
        $datas['created'] = date('Y-m-d H:i:s',time());
        $datas['created_by'] = $this->aauth->get_user_id();
        $res=$this->db->insert('stock_histories',$datas);
@@ -38,9 +37,8 @@ class  Stocks_model extends CI_Model{
        $this->db->where('stock_id',$resp['stock_id']);
        if($this->db->update('stocks',$datai)){
        $datas['stock_id']=$resp['stock_id']; 
-       $datas['action']='Increase Stock';
        $datas['description']='Add Stock';
-       $datas['stock']=$this->input->post("stock");
+       $datas['stock_in']=$this->input->post("stock");
        $datas['created'] = date('Y-m-d H:i:s',time());
        $datas['created_by'] = $this->aauth->get_user_id();
        $res=$this->db->insert('stock_histories',$datas);
@@ -70,7 +68,7 @@ class  Stocks_model extends CI_Model{
   * */
   public function get_stock_details($id)
   {
-    $this->db->select('stocks.*,wherehouses.wherehouse_name,products.item_title');
+    $this->db->select('stocks.*,wherehouses.wherehouse_name,products.item_title,products.unit_cost');
     $this->db->from('stocks');
     $this->db->where('stock_id',$id);
     $this->db->join('wherehouses','wherehouses.wherehouse_id = stocks.wherehouse_id');
@@ -102,8 +100,7 @@ class  Stocks_model extends CI_Model{
         {
       if($oldRecord["stock"] > $data["stock"]){ //decreased
          $diff =  $oldRecord["stock"] - $data["stock"];
-        $datas["stock"] = $diff;
-        $datas["action"] ='Decrease Stock';
+        $datas["stock_out"] = $diff;
         $datas['description']='Update stock decrease stock quantity '.$diff;;
         $datas['created'] = date('Y-m-d H:i:s',time());
         $datas['created_by'] = $this->aauth->get_user_id();
@@ -111,8 +108,7 @@ class  Stocks_model extends CI_Model{
        }
        if($oldRecord["stock"] < $data["stock"]){ //increased
         $diff =  $data["stock"] - $oldRecord["stock"];
-        $datas["stock"] = $diff;
-        $datas["action"] ='Increase Stock';
+        $datas["stock_in"] = $diff;
         $datas['description']='Update stock increase stock quantity '.$diff;;
         $datas['created'] = date('Y-m-d H:i:s',time());
         $datas['created_by'] = $this->aauth->get_user_id();
@@ -129,6 +125,25 @@ class  Stocks_model extends CI_Model{
     }
   }
 
+
+  public function get_stock_summary_data(){
+   $from =  trim($this->input->post('start_date'));
+    $to =    trim($this->input->post('end_date'));
+    $condition = '';
+    if($from && $to) 
+    $condition="date(stock_histories.created) >= '$from' AND date(stock_histories.created) <= '$to'";
+    $this->db->select('SUM(stock_in)- SUM(stock_out) as total_avl_stock,products.item_title,products.unit_cost,measurements.measurement_name');
+     if($condition!=''){
+      $this->db->where($condition);
+     }
+      $this->db->join('stocks','stocks.stock_id = stock_histories.stock_id','left');
+      $this->db->join('products','products.product_id = stocks.product_id','left');
+      $this->db->join('measurements','products.measurement = measurements.measurement_id','left');
+      $this->db->group_by('stock_histories.stock_id');
+      $query = $this->db->get('stock_histories');
+      $result = $query->result_array();
+      return $result;
+  }
   /**
   * Categories_model::delete()
   *

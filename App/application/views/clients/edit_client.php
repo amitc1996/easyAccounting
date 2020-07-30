@@ -13,7 +13,6 @@ $client_orgnisation_phone = array(
   'value' => set_value('client_orgnisation_phone',@$details[0]['client_orgnisation_phone']),
   'class'=>'form-control',
   'placeholder'=>'Company Phone',
-  'data-parsley-required'=>'true',
   'data-parsley-pattern'=>'\+?\d[\d -]{8,12}\d',
   'data-parsley-pattern-message'=>'Enter valid phone number'
 );
@@ -23,10 +22,8 @@ $gstin = array(
   'value' => set_value('gstin',@$details[0]['gstin']),
   'class'=>'form-control',
   'placeholder'=>'GSTIN',
-  'data-parsley-required'=>'true',
   'data-parsley-pattern'=>'^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$',
   'data-parsley-pattern-message'=>'Enter valid gstin number',
-  'data-parsley-required'=>'true',
 );
 $client_email = array(
   'name'  => 'client_email',
@@ -42,7 +39,6 @@ $client_name = array(
   'value' => set_value('client_name',@$details[0]['client_name']),
   'class'=>'form-control',
   'placeholder'=>'Name',
-  'data-parsley-required'=>'true'
 );
 $client_mobile = array(
   'name'  => 'client_mobile',
@@ -99,7 +95,6 @@ $client_zip_b = array(
   'value' => set_value('client_zip_b',@$details[0]['client_zip_b']),
   'class'=>'form-control',
   'placeholder'=>'Pincode',
-  'data-parsley-required'=>'true',
   'data-parsley-pattern'=>'^[\d\+\-\.\(\)\/\s]*$',
   'data-parsley-pattern-message'=>'Enter valid pincode'
 );
@@ -143,7 +138,6 @@ $client_zip_s = array(
   'value' => set_value('client_zip_s',@$details[0]['client_zip_s']),
   'class'=>'form-control s_addr',
   'placeholder'=>'Pincode',
-  'data-parsley-required'=>'true',
   'data-parsley-pattern'=>'^[\d\+\-\.\(\)\/\s]*$',
   'data-parsley-pattern-message'=>'Enter valid pincode'
 );

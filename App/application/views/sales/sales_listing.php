@@ -14,8 +14,6 @@ $csrf = array(
 
    <div class="pull-right" >
     <a href="<?php echo site_url('sales/add_sale');?>" class="btn btn-custom" title="Add Sale"><span class="glyphicon glyphicon-plus-sign " style="margin-right: 5px;"></span>Add Sale</a>
- <!--      <a href="<?php echo site_url('sales/generate_xlsx');?>" class="btn btn-primary" title="Export to CSV"><span class="glyphicon glyphicon-open " style="margin-right: 5px;"></span>Export to CSV</a> -->
-   <!--   <button data-target="#excel_modal" data-toggle='modal' class="btn btn-primary" title="Import via CSV"><span class="glyphicon glyphicon-download-alt" style="margin-right: 5px;"></span>Import via CSV</button> --> 
   </div>
 
   <div class="clearfix"></div>
@@ -25,18 +23,6 @@ $csrf = array(
 <section class="content">
   <!-- Small boxes (Stat box) -->
   <div id="alert_area"></div>
-        <?php
-              $msg = $this->session->flashdata('message');
-              $class = $this->session->flashdata('class');
-              if($msg)
-              {
-                echo '<div class="col-md-12" style="margin-bottom:45px;">';
-                echo "<div class='alert alert-dismissable alert-".$class."' id='message_box' ><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>".$msg."</div>";
-                echo '</div>';
-                echo '<script>setTimeout(function(){$(\'#message_box\').fadeOut(\'slow\')},3000);</script>';
-                echo '<div class="clearfix"><br /></div>';
-              }
-            ?>
   <div class="row">
     <div class="col-xs-12">
       <div class="box box-danger">
@@ -44,14 +30,14 @@ $csrf = array(
           <table id="sales_listing" class="table table-bordered table-striped table-condensed">
             <thead>
               <tr>
-               <th>Invoice No.</th>
-               <th>Client</th>
-               <th>Invoice Date</th>
-               <th>Paid Amount</th>
-               <th>Grand Total</th>
-               <th>Payment Status</th>
-               <th>Created</th>
-               <th class="actions">Actions</th>
+               <th style="width: 15%">Invoice No.</th>
+               <th style="width: 25%">Client</th>
+               <th style="width: 10%">Invoice Date</th>
+               <th style="width: 10%">Paid Amount</th>
+               <th style="width: 10%">Grand Total</th>
+               <th style="width: 5%">Payment Status</th>
+               <th style="width: 8%">Created</th>
+               <th style="width: 20%">Actions</th>
              </tr>
            </thead>
          </table>
@@ -120,6 +106,9 @@ $csrf = array(
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+
+
 <script src="<?php echo base_url('assets/js/jquery.dataTables.min.js');?>"></script>
 <script>
   $(document).ready(function(){
@@ -160,12 +149,17 @@ $csrf = array(
             }
              var links="";
               links += '<a href="<?php echo site_url('Sales/view_sale').'/';?>'+aData[7]+'" data-sale_id="'+aData[7]+'" title="View Details" class="btn btn-default btn-xs view_sales_records" style="margin-right:5px;"><span class="glyphicon glyphicon-search"></span></a>';
-               links += '<a href="<?php echo site_url('sales/edit_sale'); ?>/'+aData[7]+'" data-purchase_id="'+aData[4]+'" title="Edit Details" class="btn btn-custom btn-primary btn-xs purchase_edit" style="margin-right:7px;"><span class="glyphicon glyphicon-pencil"></span></a>'; 
-              links += '<a href="" data-sale_id="'+aData[7]+'" title="Print sale" class="btn btn-primary btn-xs print_sale" style="margin-right:5px;" ><span class="fa fa-print"></span></a>';
                if(aData[5]!=2){
-               links += '<a href="<?php echo site_url('sales/receipt'); ?>/'+aData[7]+'" data-purchase_id="'+aData[7]+'" title="Pay Now" class="btn btn-warning btn-xs view_purchase" style="margin-right:7px;" ><i class="fa fa-money"></i></a>';  
-               }
-               // links += '<a href="<?php //echo site_url('sales/edit_sale'); ?>/'+aData[5]+'"  data-sale_id="'+aData[4]+'" title="Edit Sale" class="btn btn-primary btn-xs edit_sale" style="margin-right:5px;" ><span class="glyphicon glyphicon-pencil"></span></a>';  
+               links += '<a href="<?php echo site_url('sales/receipt'); ?>/'+aData[7]+'" data-purchase_id="'+aData[7]+'" title="Pay Now" class="btn btn-success btn-xs view_purchase" style="margin-right:7px;" ><i class="fa fa-money"></i></a>';  
+
+              links += '<a href="<?php echo site_url('sales/edit_sale'); ?>/'+aData[7]+'" data-sale_id="'+aData[7]+'" title="Edit Details" class="btn btn-custom btn-primary btn-xs purchase_edit" style="margin-right:7px;"><span class="glyphicon glyphicon-pencil"></span></a>'; 
+
+               links += '<a href="#" data-sale_id="'+aData[7]+'"  title="Delete Sale" class="btn btn-danger btn-xs delete_sale" style="margin-right:5px;" ><span class="fa fa-trash"></span></a>';
+               } 
+              links += '<a href="" data-sale_id="'+aData[7]+'" title="Print sale" class="btn btn-primary btn-xs print_sale" style="margin-right:5px;" ><span class="fa fa-file"></span></a>';
+
+              links += '<a href="" data-sale_id="'+aData[7]+'" title="Send Invoice" class="btn btn-warning btn-xs send_invoice" style="margin-right:5px;" ><span class="fa fa-envelope"></span></a>';
+
                 $('td:eq(5)', nRow).html(status);
                 $('td:eq(7)', nRow).html(links);
                 $('td:eq(2)', nRow).html(dateSplit(aData[2]));
@@ -186,6 +180,54 @@ $csrf = array(
              }
              ]
            });
+    //Delete product
+  $(document).on('click','.delete_sale',function(e){
+    e.preventDefault();
+    var response = confirm('Are you sure want to delete this sale? \nThis action will add sale items back to stock.');
+    if(response){
+      id = $(this).attr('data-sale_id');
+      $.ajax({
+        url:'<?php echo site_url('sales/delete_sale') ?>/'+id,
+        dataType: 'json',
+        success:function(result)
+        {
+          if(result.status==1)
+          {
+              toastr.success(result.message);
+            ajax_datatable.fnDraw();
+          }
+          else
+          {
+            toastr.error(result.message);
+          }
+        }
+      });
+    }
+    return false;
+  });
+
+   //send invoice to email
+  $(document).on('click','.send_invoice',function(e){
+    e.preventDefault();
+    id=$(this).attr('data-sale_id');
+    $.ajax({
+      url:'<?php echo site_url('sales/send_invoice') ?>/'+id,
+      dataType: 'json',
+      success:function(result)
+      {
+       if(result.status==1)
+          {
+              toastr.success(result.message);
+            ajax_datatable.fnDraw();
+          }
+          else
+          {
+            toastr.error(result.message);
+          }
+      }
+    });
+  });
+
     $(document).on('click','.print_sale',function(e){
         e.preventDefault();
         var id=$(this).attr('data-sale_id');

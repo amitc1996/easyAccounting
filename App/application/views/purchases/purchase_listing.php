@@ -88,8 +88,11 @@ $csrf = array(
             }
         var links="";
               links += '<a href="<?php echo site_url('purchases/view_purchase'); ?>/'+aData[7]+'" data-purchase_id="'+aData[7]+'" title="View Details" class="btn btn-default btn-xs view_purchase" style="margin-right:7px;" ><span class="glyphicon glyphicon-search"></span></a>';  
-              links += '<a href="<?php echo site_url('purchases/edit_purchase'); ?>/'+aData[7]+'" data-purchase_id="'+aData[4]+'" title="Edit Details" class="btn btn-custom btn-primary btn-xs purchase_edit" style="margin-right:7px;"><span class="glyphicon glyphicon-pencil"></span></a>'; 
                 if(aData[5]!=2){
+                links += '<a href="<?php echo site_url('purchases/edit_purchase'); ?>/'+aData[7]+'" data-purchase_id="'+aData[7]+'" title="Edit Details" class="btn btn-custom btn-primary btn-xs purchase_edit" style="margin-right:7px;"><span class="glyphicon glyphicon-pencil"></span></a>'; 
+                
+                 links += '<a href="#" data-purchase_id="'+aData[7]+'" title="Delete Purchase" class="btn btn-danger btn-xs delete_purchase" style="margin-right:5px;" ><span class="fa fa-trash"></span></a>';   
+
                links += '<a href="<?php echo site_url('purchases/payment'); ?>/'+aData[7]+'" data-purchase_id="'+aData[7]+'" title="Pay Now" class="btn btn-warning btn-xs view_purchase" style="margin-right:7px;" ><i class="fa fa-money"></i></a>';  
                }
                 $('td:eq(5)', nRow).html(status);
@@ -112,6 +115,34 @@ $csrf = array(
              }
              ]
            });
+
+    //Delete product
+  $(document).on('click','.delete_purchase',function(e){
+    e.preventDefault();
+    var response = confirm('Are you sure want to delete this purchase? \nThis action will reduce purchase items from stock.');
+    if(response){
+      id = $(this).attr('data-purchase_id');
+      $.ajax({
+        url:'<?php echo site_url('purchases/delete_purchase') ?>/'+id,
+        dataType: 'json',
+        success:function(result)
+        {
+          if(result.status==1)
+          {
+
+             toastr.success(result.message);
+            ajax_datatable.fnDraw();
+          }
+          else
+          {
+            toastr.error(result.message);
+          }
+        }
+      });
+    }
+    return false;
+  });
+
 });
 
 </script>

@@ -118,4 +118,13 @@ class Dashboard_model extends CI_Model
           $cnt = $query->row_array();
           return $cnt;
        }
+
+    public function get_total_avl_stock_amount(){
+   $this->db->select('SUM(products.unit_cost*stocks.stock) as stockvalue');
+    $this->db->from('stocks');
+    $this->db->join('products','products.product_id = stocks.product_id');
+    $query = $this->db->get();
+    $row = $query->row_array();
+    return  $row['stockvalue'];
+    }
 }

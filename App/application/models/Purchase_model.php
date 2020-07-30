@@ -115,21 +115,34 @@ class Purchase_model extends CI_Model
                       $dataForInsert["wherehouse_id"] = $this->input->post("wherehouse");
                       $dataForInsert["created"] = date('Y-m-d H:i:s',time());  
                       $dataForInsert["created_by"] = $user_id;  
-                      array_push($allInserts,$dataForInsert);
+                  
+                      if($this->db->insert('stocks',$dataForInsert)){
+                       $datas['stock_id']=$this->db->insert_id(); 
+                       $datas['description']='Purchase item';
+                       $datas['stock_in']=$val["item_qty"];
+                       $datas['purchase_id']=$purchase_id;
+                       $datas['created'] = date('Y-m-d H:i:s',time());
+                       $datas['created_by'] = $this->aauth->get_user_id();
+                       $res=$this->db->insert('stock_histories',$datas);
+                      }
                  }
                  else
                  {
-                    $dataForUpdate["product_id"] = $val["product_id"];
                     $dataForUpdate["stock"] = $currentstock[$key]['stock']+$val["item_qty"]; 
-                    array_push($allUpdate,$dataForUpdate);
+                    $this->db->where('product_id',$val["product_id"]);
+                    if($this->db->update('stocks',$dataForUpdate)){
+                       $datas['stock_id']=$currentstock[$key]['stock_id']; 
+                       $datas['description']='Purchase item';
+                       $datas['stock_in']=$val["item_qty"];
+                       $datas['purchase_id']=$purchase_id;
+                       $datas['created'] = date('Y-m-d H:i:s',time());
+                       $datas['created_by'] = $this->aauth->get_user_id();
+                       $res=$this->db->insert('stock_histories',$datas);
+                    }
+                  
                  }
                }
 
-               if(count($allInserts)>0)
-               $this->db->insert_batch('stocks',$allInserts);
-               
-               if(count($allUpdate)>0)
-               $this->db->update_batch('stocks',$allUpdate,'product_id');
                $this->db->trans_complete();
                 return $purchase_id;
                }
@@ -143,6 +156,17 @@ class Purchase_model extends CI_Model
  public function update_purchase($id)
  {
    $user_id=$this->aauth->get_user_id();
+   //get current items 
+    $purchasedetails = $this->get_purchase($id);
+    foreach ($purchasedetails['purchase_items'] as $key => $value) {
+     if(isset($current[$value['product_id']] )){
+      $current[$value['product_id']] += $value['item_qty'];
+      }
+      else{
+         $current[$value['product_id']] = $value['item_qty'];
+      }
+    }
+    
        $data = array(
         "po_number"=>$this->input->post("po_number"),
         "purchase_date"=>date("Y-m-d", strtotime($this->input->post("date_purchased"))),
@@ -189,6 +213,12 @@ class Purchase_model extends CI_Model
          $this->db->where('purchase_id',$id);
         if($this->db->update('purchases',$data))
         {  
+           //re-adding stock on current items
+            foreach ($current as $key => $val) {
+                  $sql = 'UPDATE stocks SET stock = stock - '.$val.' WHERE product_id='.$key;
+                  $this->db->query($sql); 
+            }
+            
             $this->db->where('purchase_id',$id);
             $this->db->delete('purchase_items');
             $purchase_id  = $id;
@@ -246,21 +276,63 @@ class Purchase_model extends CI_Model
                       $dataForInsert["wherehouse_id"] = $this->input->post("wherehouse");
                       $dataForInsert["created"] = date('Y-m-d H:i:s',time());  
                       $dataForInsert["created_by"] = $user_id;  
-                      array_push($allInserts,$dataForInsert);
+                    
+                      if($this->db->insert('stocks',$dataForInsert)){
+                       if($current[$val["product_id"]]!=$val["item_qty"])
+                          {
+                        if($current[$val["product_id"]] > $val["item_qty"]){ //decreased
+                          $diff =  $current[$val["product_id"]] - $val["item_qty"];
+                          $datas["stock_out"] = $diff;
+                          $datas['description']='Update purchase item '.$diff;;
+                          $datas['created'] = date('Y-m-d H:i:s',time());
+                          $datas['created_by'] = $this->aauth->get_user_id();
+                          $datas['stock_id']=$currentstock[$key]['stock_id']; 
+                          $datas['purchase_id']=$purchase_id;
+                         }
+                         if($current[$val["product_id"]] < $val["item_qty"]){ //increased
+                          $diff =  $val["item_qty"] - $current[$val["product_id"]];
+                          $datas["stock_in"] = $diff;
+                          $datas['description']='Update purchase item '.$diff;;
+                          $datas['created'] = date('Y-m-d H:i:s',time());
+                          $datas['created_by'] = $this->aauth->get_user_id();
+                          $datas['stock_id']=$currentstock[$key]['stock_id'];
+                          $datas['purchase_id']=$purchase_id;
+                         }
+                         $res=$this->db->insert('stock_histories',$datas);
+                       }
+                      }
                  }
                  else
                  {
-                    $dataForUpdate["product_id"] = $val["product_id"];
                     $dataForUpdate["stock"] = $currentstock[$key]['stock']+$val["item_qty"]; 
-                    array_push($allUpdate,$dataForUpdate);
+                    $this->db->where('product_id',$val["product_id"]);
+                    if($this->db->update('stocks',$dataForUpdate)){
+                  
+                        if($current[$val["product_id"]]!=$val["item_qty"])
+                          {
+                        if($current[$val["product_id"]] > $val["item_qty"]){ //decreased
+                          $diff =  $current[$val["product_id"]] - $val["item_qty"];
+                          $datas["stock_out"] = $diff;
+                          $datas['description']='Update purchase item '.$diff;;
+                          $datas['created'] = date('Y-m-d H:i:s',time());
+                          $datas['created_by'] = $this->aauth->get_user_id();
+                          $datas['stock_id']=$currentstock[$key]['stock_id']; 
+                         }
+                         if($current[$val["product_id"]] < $val["item_qty"]){ //increased
+                          $diff =  $val["item_qty"] - $current[$val["product_id"]];
+                          $datas["stock_in"] = $diff;
+                          $datas['description']='Update purchase item '.$diff;;
+                          $datas['created'] = date('Y-m-d H:i:s',time());
+                          $datas['created_by'] = $this->aauth->get_user_id();
+                          $datas['stock_id']=$currentstock[$key]['stock_id'];
+                         }
+                         $res=$this->db->insert('stock_histories',$datas);
+                       }
+                    }
+                  
                  }
                }
 
-               if(count($allInserts)>0)
-               $this->db->insert_batch('stocks',$allInserts);
-               
-               if(count($allUpdate)>0)
-               $this->db->update_batch('stocks',$allUpdate,'product_id');
                $this->db->trans_complete();
                 return $purchase_id;
                }
@@ -270,6 +342,47 @@ class Purchase_model extends CI_Model
         }
         return false;
  }
+
+     /**
+  * Purchase_model:: delete_purchase_item
+  * @param pid
+  * @return boolean
+  */
+  public function delete_purchase($pid){
+    $user_id=$this->aauth->get_user_id();
+    //get current items
+   $purchasedetails = $this->get_purchase($pid);
+    foreach ($purchasedetails['purchase_items'] as $key => $value) {
+    if(isset($current[$value['product_id']])){
+     $current[$value['product_id']]  +=  $value['item_qty'];
+    } 
+    else{
+      $current[$value['product_id']] =  $value['item_qty'];
+    } 
+    }
+
+    foreach ($current as $key => $val) {
+          $sql = 'UPDATE stocks SET stock = stock - '.$val.' WHERE product_id='.$key;
+          $this->db->query($sql); 
+          $stock_id= $this->db->where('product_id',$key)->get('stocks')->row()->stock_id;
+
+          $datas["stock_out"] = $val;
+          $datas['description']='Delete purchases item '.$val;
+          $datas['created'] = date('Y-m-d H:i:s',time());
+          $datas['created_by'] = $this->aauth->get_user_id();
+          $datas['stock_id']=$stock_id;
+          $datas['purchase_id']=$pid;
+          $res=$this->db->insert('stock_histories',$datas);
+    }   
+
+    $data["is_deleted"] = 1;
+    $data["deleted_on"] = date('Y-m-d H:i:s');
+    $data["deleted_by"] = $this->aauth->get_user_id();
+    $this->db->where('created_by',$user_id);
+    $this->db->where('purchase_id',$pid);
+    return $this->db->update('purchases',$data);
+    return false;
+    }
 
 
   /**

@@ -2,7 +2,7 @@
 $invoice_number = array(
   'name'  => 'invoice_number',
   'id'  => 'invoice_number',
-  'value' => set_value('invoice_number',$invoice_number),
+  'value' => set_value('invoice_number'),
   'class'=>'form-control',
   'placeholder'=>'Invoice No.',
   'readonly'=>'readonly'
@@ -543,8 +543,88 @@ $i=0;
   var rowCount = 0;
   var taxamount=0.00;
   var unit_arr=JSON.parse('<?php echo json_encode($measurements);?>');
+  var result_arr=JSON.parse('<?php echo json_encode($details);?>');
  $(document).ready(function(){
+  console.log(result_arr)
    $('body').addClass('sidebar-collapse');
+
+   //add edit data
+  $('#invoice_number').val(result_arr.sale_details[0].invoice_number);
+  $('#invoice_date').val(result_arr.sale_details[0].invoice_date);
+  $('#client_name').val(result_arr.sale_details[0].client_id);
+  get_client_details(result_arr.sale_details[0].client_id)
+$('#wherehouse').val(result_arr.sale_details[0].wherehouse_id);
+
+
+  $('#transportation_mode').val(result_arr.sale_details[0].transportation_mode);
+  $('#distacnce_to_transport').val(result_arr.sale_details[0].distacnce_to_transport);
+  $('#transporter_name').val(result_arr.sale_details[0].transporter_name);
+  $('#transporter_id').val(result_arr.sale_details[0].transporter_id);
+  $('#transporter_document_no').val(result_arr.sale_details[0].transporter_document_no);
+  $('#transporter_document_date').val(result_arr.sale_details[0].transporter_document_date);
+  $('#vechicle_no').val(result_arr.sale_details[0].vechicle_no);
+  $('#place_of_supply').val(result_arr.sale_details[0].place_of_supply);
+  $('#buyer_order').val(result_arr.sale_details[0].buyer_order);
+  $('#dispatch_document_no').val(result_arr.sale_details[0].dispatch_document_no);
+  $('#delevery_note_date').val(result_arr.sale_details[0].delevery_note_date);
+  $('#dispatch_through').val(result_arr.sale_details[0].dispatch_through);
+
+
+  $('#sub_total_amount').val(result_arr.sale_details[0].sub_total);
+  $('#total_discount_amount').val(result_arr.sale_details[0].total_discount);
+  $('#tigst').val(result_arr.sale_details[0].total_igst);
+  $('#tcgst').val(result_arr.sale_details[0].total_cgst);
+  $('#tsgst').val(result_arr.sale_details[0].total_sgst);
+  $('#total').val(result_arr.sale_details[0].total);
+  $('#less_round_off').val(result_arr.sale_details[0].less_round_off);
+  $('#grand_total').val(result_arr.sale_details[0].grand_total);
+
+  $.each(result_arr.sale_items, function(index, item_data) {
+        if(item_data)
+           {
+                  var unit_option='';
+                  $.each(unit_arr, function(index, value) {
+                       var selected =(item_data.measurement==value.measurement_id)?'selected':'';
+                       unit_option+='<option '+selected+' value="'+value.measurement_id+'">'+value.measurement_name+'</option>';
+                   }); 
+
+                var item_data=`<tr class="${rowCount} item_row" id="row_${rowCount}">
+                     <input type="hidden" value="${item_data.product_id}" count="${rowCount}" id="product_id_${rowCount}" name="item[${rowCount}][product_id]">
+                     <input class="form-control discount_name_inp" count="${rowCount}" type="hidden" id="discount_name_${rowCount}" value="" name="item[${rowCount}][discount_name]">
+                     <input class="form-control tax_name_inp" count="${rowCount}" type="hidden" id="tax_name_${rowCount}" value="" name="item[${rowCount}][tax_name]">
+                  <input class="form-control hidden_info" count="${rowCount}" id="measurement_name_${rowCount}" name="item[${rowCount}][measurement_name]" type="hidden" value="${item_data.measurement_name}">
+                     <td><a data-remove_row ="${rowCount}" count="${rowCount}" class="remove_item" style="color:red;" href=""><i class="fa fa-remove"></i></a></td>
+                     <td><input class="form-control hidden_info" count="${rowCount}" id="item_title_${rowCount}" name="item[${rowCount}][item_title]" type="text" value="${item_data.item_title}"></td>
+                     <td><input class="form-control hidden_info" count="${rowCount}" id="hsnsac_code_${rowCount}" name="item[${rowCount}][hsn_sac_code]" type="text" value="${item_data.hsn_sac_code}"></td>
+                     <td style="width:150px;"><select required="true" id="measurement_id_${rowCount}" count="${rowCount}" class="form-control measurement_inp" name="item[${rowCount}][measurement_id]"> ${unit_option}</select></td> 
+                     <td><input min="0"  id="unit_cost_${rowCount}" count="${rowCount}" class="form-control unit_price_inp" type="text" value="${item_data.unit_cost}" name="item[${rowCount}][unit_cost]"></td>
+                     <td><input min="1" id="item_qty_${rowCount}" count="${rowCount}" class="form-control quantity_inp" type="number" value="${item_data.item_qty}" 
+                     name="item[${rowCount}][item_qty]"></td>
+                     <td><input id="total_amount_${rowCount}" count="${rowCount}" class="form-control hidden_info price_total_inp hidden_info" type="text" value="${item_data.total_cost}" 
+                     name="item[${rowCount}][total_amount]"></td>
+
+                     <td><input  class="form-control price_discount_percent" count="${rowCount}" name="item[${rowCount}][discount_percent]" id="discount_percent_${rowCount}" type="text" value="${item_data.discount}"></td>
+
+                      <td><input  class="form-control price_discount_amount hidden_info" count="${rowCount}" name="item[${rowCount}][discount_amount]" id="discount_amount_${rowCount}" type="text" value="${item_data.discount_amount}"></td>
+
+                      
+                     <td><input class="form-control price_igst_percent" count="${rowCount}" name="item[${rowCount}][tax_igst_percent]" id="tax_igst_percent_${rowCount}" type="text" value="${item_data.igst}"></td>
+                     <td><input class="form-control price_tax_igst_amount hidden_info" count="${rowCount}" name="item[${rowCount}][tax_igst_amount]" id="tax_igst_amount_${rowCount}" type="text" value="${item_data.igst_amount}"></td>
+
+                     <td><input class="form-control price_cgst_percent" count="${rowCount}" name="item[${rowCount}][tax_cgst_percent]" id="tax_cgst_percent_${rowCount}" type="text" value="${item_data.cgst}"></td>
+                     <td><input class="form-control price_tax_cgst_amount hidden_info" count="${rowCount}" name="item[${rowCount}][tax_cgst_amount]" id="tax_cgst_amount_${rowCount}" type="text" value="${item_data.cgst_amount}"></td>
+
+                     <td><input class="form-control price_sgst_percent" count="${rowCount}" name="item[${rowCount}][tax_sgst_percent]" id="tax_sgst_percent_${rowCount}" type="text" value="${item_data.sgst}"></td>
+                     <td><input class="form-control price_tax_sgst_amount hidden_info" count="${rowCount}" name="item[${rowCount}][tax_sgst_amount]" id="tax_sgst_amount_${rowCount}" type="text" value="${item_data.sgst_amount}"></td>
+
+                     <td><input class="form-control price_gtotal_inp hidden_info" count="${rowCount}" type="text"  value="${item_data.grand_total_coast}"id="total_gamount_${rowCount}" name="item[${rowCount}][total_gamount]"></td>
+                 <tr>`;
+                rowCount++;
+                $('#item_data').append(item_data);
+           }
+ }); 
+
+
    $('#save_and_pay').on('click',function(){
     if($('#is_submit_and_pay').val('1')){
        $('#sale_add_form').trigger('submit');
@@ -600,7 +680,7 @@ $("#item_title").autocomplete({
     var _this=$(this);
     var values = $('#sale_add_form').serialize();
     $.ajax({
-      url:'<?php echo site_url('sales/save_sale'); ?>',
+     url:'<?php echo site_url('sales/update_sale/'); ?>'+result_arr.sale_details[0].sale_id,
       dataType:'json',
       type:'POST',
       data:values,
@@ -610,12 +690,8 @@ $("#item_title").autocomplete({
       complete: function (){complete(_this)},
       success:function(result){
         if(result.status==1){
-
          toastr.success(result.message);
-          $('#sale_add_form')[0].reset();
           $('#sale_add_form').parsley().reset();
-          $('#item_data').empty();
-          $('.billing_shipping_address').slideUp();
            setTimeout(function(){window.location.href = result.redirect_url},4000);
         }else{
           toastr.error(result.message);

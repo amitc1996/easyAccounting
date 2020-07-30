@@ -54,6 +54,7 @@ $csrf = array(
     </h1>
     <div class="pull-right" >
       <a href="#" class="btn btn-custom" title="Add Product" data-toggle="modal" data-target="#add_stock" ><span class="glyphicon glyphicon-plus-sign " style="margin-right: 5px;"></span>Add</a>
+      <a href="<?php echo site_url('stocks/stock_summary');?>" class="btn btn-custom" title="Stock Summary"><span class="glyphicon glyphicon-file" style="margin-right: 5px;"></span>Stock Summary</a>
     </div>
     <div class="clearfix"></div>
   </section>

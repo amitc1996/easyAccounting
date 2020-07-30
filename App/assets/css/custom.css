@@ -139,3 +139,8 @@ body.auth .box .body {
 .total_amt{
     margin-bottom: 40px;
 }
+
+.actions{
+    width: 150px;
+}
+

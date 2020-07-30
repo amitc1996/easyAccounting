@@ -13,15 +13,57 @@ $csrf = array(
         <section class="content-header">
           <div class="row">
             <div class="col-md-9">
-              <h1>
+              <h2>
             Dashboard
             <small></small>
-          </h1>
+          </h2>
             </div>
           </div>   
         </section>
                 <!-- Main content -->
         <section class="content">
+          <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="fa fa-bolt"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Total Stock Value</span>
+                  <span class="info-box-number"><?php echo moneyFormatIndia($stock_value);?></span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-red"><i class="fa fa-ticket"></i></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Total Payable Amount</span>
+                  <span class="info-box-number">324234</span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+
+            <!-- fix for small devices only -->
+            <div class="clearfix visible-sm-block"></div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="fa fa-money"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Total Outstanding</span>
+                  <span class="info-box-number">23432</span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-yellow"><i class="fa fa-group"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Total Clients</span>
+                  <span class="info-box-number"><?php echo $total_clients?$total_clients:0?></span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+          </div>
           <!-- Small boxes (Stat box) -->
            <div class="box box-danger">
                 <div class="box-header with-border">
@@ -40,48 +82,7 @@ $csrf = array(
                 </div><!-- /.box-header -->
 
                 <!-- form start -->
-                <div class="box-body">
-                  <div class="row">
-            <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-aqua">
-            <div class="inner">
-              <h3 id="total_products"></h3>
-              <p>Total Products</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <h3 id="total_payable_amount"></h3>
-
-              <p>Total Purchase Amount</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h3 id="total_outstanding"></h3>
-
-              <p>Total Sale Amount</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-primary">
-            <div class="inner">
-              <h3 id="total_clients"></h3>
-
-              <p>Total Clients</p>
-            </div>
-          </div>
-        </div>
-          </div>
+     <div class="box-body">
       <div class="row">
             <div class="col-md-3 col-sm-6 col-xs-12">
              <div class="info-box bg-red">
@@ -295,11 +296,6 @@ $('#date_inventoryFillter').on('show.daterangepicker', function(ev, picker) {
          if(result){
             var total_sale_amt_progress=(result.sales_outstanding_amount.total_paid_amount/result.sales_outstanding_amount.total_amount)/100;
             var total_purchase_payable_amt_progress=(result.purchase_payable_amount.total_paid_amount/result.purchase_payable_amount.total_amount)/100; 
-            
-            $('#total_products').text(result.total_products?result.total_products:0);
-            $('#total_payable_amount').text(result.total_payble_amount?result.total_payble_amount:0);
-            $('#total_outstanding').text(result.total_outstanding?result.total_outstanding:0);
-            $('#total_clients').text(result.total_clients?result.total_clients:0);
             $('#sales_outstanding_amt').text((result.sales_outstanding_amount.total_paid_amount?result.sales_outstanding_amount.total_paid_amount:0)+'/'+(result.sales_outstanding_amount.total_amount?result.sales_outstanding_amount.total_amount:0));
             $('#total_sale_amt').text(result.sales_outstanding_amount.total_amount?result.sales_outstanding_amount.total_amount:0);
             $('#total_sale_amt_progress').css('width',total_sale_amt_progress+'%')

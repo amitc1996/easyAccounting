@@ -13,7 +13,6 @@ $client_orgnisation_phone = array(
   'value' => set_value('client_orgnisation_phone'),
   'class'=>'form-control mask',
   'placeholder'=>'Company Phone',
-  'data-parsley-required'=>'true',
   'data-parsley-pattern'=>'\+?\d[\d -]{8,12}\d',
   'data-parsley-pattern-message'=>'Enter valid phone number'
 );
@@ -31,7 +30,6 @@ $client_name = array(
   'value' => set_value('client_name'),
   'class'=>'form-control',
   'placeholder'=>'Contact Person Name',
-  'data-parsley-required'=>'true'
 );
 $client_mobile = array(
   'name'  => 'client_mobile',
@@ -58,7 +56,6 @@ $gstin = array(
   'placeholder'=>'GSTIN',
   'data-parsley-pattern'=>'^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$',
   'data-parsley-pattern-message'=>'Enter valid gstin number',
-  'data-parsley-required'=>'true',
 );
 $client_address_b = array(
   'name'  => 'client_address_b',
@@ -206,7 +203,7 @@ $csrf = array(
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Add client</h4>
+        <h4 class="modal-title" id="myModalLabel">Add Client</h4>
       </div>
       <?php echo form_open($this->uri->uri_string(),array('role'=>"form" ,'id'=>"client_add_form",'name'=>'client_add_form', 'data-parsley-validate'=>"")); ?>
       <div class="modal-body">
@@ -378,6 +375,9 @@ $('#sam_as_billing_addrs').on('change',function(){
       var currentDate="";
       var links=""; 
        <?php  if(in_array(strtolower('clients_edit_client'),$permissions)){?> 
+
+        links += '<a href="<?php echo site_url('clients/view_client').'/';?>'+aData[5]+'" data-product_id="'+aData[5]+'" title="View Details" class="btn btn-default btn-xs view_client" style="margin-right:5px;" ><span class="glyphicon glyphicon-search"></span></a>';
+
       links += '<a href="#" data-client_id="'+aData[5]+'" title="Edit Details" class="btn btn-custom btn-xs edit_client" style="margin-right:5px;" ><span class="glyphicon glyphicon-pencil"></span></a>';
        <?php } if(in_array(strtolower('clients_delete_client'),$permissions)){?> 
       links +='<a href="#" data-client_id="'+aData[5]+'" title="Delete Details" class="btn btn-danger btn-xs delete_client"  style="margin-right:5px;"><span class="glyphicon glyphicon-trash"></span></a>';

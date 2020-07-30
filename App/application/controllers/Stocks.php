@@ -133,11 +133,41 @@ class Stocks extends CI_Controller{
   }
 
   public function get_stock_history($id){
-    $this->datatables->select('action,created,stock,description')
+    $this->datatables->select('created,stock_in,stock_out,description')
     ->where('stock_id',$id)
     ->from('stock_histories');
     echo $this->datatables->generate();
   }
+
+  public function stock_summary(){
+    $data['admin_data'] = $this->checkAccess();
+    $data['permissions'] = getUserPermissions();
+    $data["wherehouses"] = $this->common->get_wherehouses();
+    $data["products"] = $this->common->get_products();
+    $data['company_profile']=$this->common->company_profile(1);
+    $data["title"] = "Stock Summary";
+    $this->load->view('include/inner_header',$data);
+    $this->load->view('stocks/stock_summary',$data);
+    $this->load->view('include/inner_footer',$data);
+  }
+
+  public function get_stock_summary_data(){
+    $result=$this->Stocks_model->get_stock_summary_data();
+    echo json_encode($result);
+  }
+  
+  public function print_stock_summary(){
+    $data['admin_data'] = $this->checkAccess();
+    $data['permissions'] = getUserPermissions();
+    $data["wherehouses"] = $this->common->get_wherehouses();
+    $data["products"] = $this->common->get_products();
+    $data['company_profile']=$this->common->company_profile(1);
+    $data["title"] = "Stock Summary";
+    $this->load->library('pdf');
+    $html=$this->load->view('stocks/print_stock_summary', $data, true);
+    $this->pdf->createPDF($html, 'mypdf', false);
+  }
+
 
 
 

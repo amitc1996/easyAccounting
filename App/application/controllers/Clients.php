@@ -50,10 +50,10 @@ class Clients extends CI_Controller{
   
     $data["admin_data"] = $this->checkAccess();
     $this->form_validation->set_rules('client_orgnisation_name','Company Name','trim|required|xss_clean');
-    $this->form_validation->set_rules('client_orgnisation_phone','Company Phone','trim|required|xss_clean');
+    $this->form_validation->set_rules('client_orgnisation_phone','Company Phone','trim|xss_clean');
     $this->form_validation->set_rules('client_mobile','Client mobile','trim|xss_clean');
     $this->form_validation->set_rules('client_email','Client email','trim|xss_clean');
-    $this->form_validation->set_rules('client_name','Client name','trim|required|xss_clean');
+    $this->form_validation->set_rules('client_name','Client name','trim|xss_clean');
     
     $this->form_validation->set_rules('gstin','GSTIN','trim|xss_clean');
     $this->form_validation->set_rules('client_tax_number','Client Service Tax Number','trim|xss_clean');
@@ -86,6 +86,22 @@ class Clients extends CI_Controller{
     echo json_encode($result);
   }
 
+  /**
+     * Clients::view_client()
+     * @return void
+     */
+  public function view_client($id){
+
+    $data['admin_data'] = $this->checkAccess();
+    $data['permissions'] = getUserPermissions();
+    $data['title'] = 'View Client';
+    $data["details"] = $this->Clients_model->get_clients_details($id);
+    $this->load->view('include/inner_header',$data);
+    $this->load->view('clients/view_client',$data);
+    $this->load->view('include/inner_footer',$data);
+  }
+
+
    /**
    * Clients::edit_client()
    * @return json
@@ -106,10 +122,10 @@ class Clients extends CI_Controller{
 
     $data['admin_data'] = $this->checkAccess();
     $this->form_validation->set_rules('client_orgnisation_name','Company Name','trim|required|xss_clean');
-    $this->form_validation->set_rules('client_orgnisation_phone','Company Phone','trim|required|xss_clean');
+    $this->form_validation->set_rules('client_orgnisation_phone','Company Phone','trim|xss_clean');
     $this->form_validation->set_rules('client_mobile','Client mobile','trim|xss_clean');
     $this->form_validation->set_rules('client_email','Client email','trim|xss_clean');
-    $this->form_validation->set_rules('client_name','Client name','trim|required|xss_clean');
+    $this->form_validation->set_rules('client_name','Client name','trim|xss_clean');
     
     $this->form_validation->set_rules('gstin','GSTIN','trim|xss_clean');
     $this->form_validation->set_rules('client_tax_number','Client Service Tax Number','trim|xss_clean');

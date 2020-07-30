@@ -50,11 +50,11 @@ class Suppliers extends CI_Controller{
   public function add_supplier(){
     $data["admin_data"] = $this->checkAccess();
     $this->form_validation->set_rules('supplier_orgnisation_name','Supplier Orgnisation Name','trim|required|xss_clean');
-    $this->form_validation->set_rules('supplier_orgnisation_phone','Supplier Phone','trim|required|xss_clean');
+    $this->form_validation->set_rules('supplier_orgnisation_phone','Supplier Phone','trim|xss_clean');
     $this->form_validation->set_rules('supplier_mobile','Supplier mobile','trim|xss_clean');
 
     $this->form_validation->set_rules('supplier_email','Supplier email','trim|xss_clean');
-    $this->form_validation->set_rules('supplier_name','Supplier name','trim|required|xss_clean');
+    $this->form_validation->set_rules('supplier_name','Supplier name','trim|xss_clean');
 
     $this->form_validation->set_rules('gstin','GSTIN','trim|xss_clean');
     $this->form_validation->set_rules('supplier_tax_number','Client Service Tax Number','trim|xss_clean');
@@ -63,13 +63,13 @@ class Suppliers extends CI_Controller{
     $this->form_validation->set_rules('supplier_city_b','Supplier billing city','trim|required|xss_clean');
     $this->form_validation->set_rules('supplier_state_b','Supplier billing state','trim|required|xss_clean');
     $this->form_validation->set_rules('supplier_country_b','Supplier billing country','trim|required|xss_clean');
-    $this->form_validation->set_rules('supplier_zip_b','Supplier billing zip','trim|required|xss_clean');
+    $this->form_validation->set_rules('supplier_zip_b','Supplier billing zip','trim|xss_clean');
 
     $this->form_validation->set_rules('supplier_address_s','Supplier shipping address','trim|required|xss_clean');
     $this->form_validation->set_rules('supplier_city_s','Supplier shipping city','trim|required|xss_clean');
     $this->form_validation->set_rules('supplier_state_s','Supplier shipping state','trim|required|xss_clean');
     $this->form_validation->set_rules('supplier_country_s','Supplier shipping country','trim|required|xss_clean');
-    $this->form_validation->set_rules('supplier_zip_s','Supplier shipping zip','trim|required|xss_clean');
+    $this->form_validation->set_rules('supplier_zip_s','Supplier shipping zip','trim|xss_clean');
 
     if($this->form_validation->run()){
       if($this->Suppliers_model->add_supplier()){
@@ -85,6 +85,22 @@ class Suppliers extends CI_Controller{
     }
     echo json_encode($result);
   }
+
+   /**
+     * Suppliers::view_supplier()
+     * @return void
+     */
+  public function view_supplier($id){
+
+    $data['admin_data'] = $this->checkAccess();
+    $data['permissions'] = getUserPermissions();
+    $data['title'] = 'View Supplier';
+    $data["details"] = $this->Suppliers_model->get_supplier_details($id);
+    $this->load->view('include/inner_header',$data);
+    $this->load->view('suppliers/view_supplier',$data);
+    $this->load->view('include/inner_footer',$data);
+  }
+
 
   /**
      * Suppliers::edit_supplier()
@@ -106,12 +122,12 @@ class Suppliers extends CI_Controller{
 
   $data['admin_data'] = $this->checkAccess();
 
-  $this->form_validation->set_rules('supplier_orgnisation_name','Supplier Orgnisation Name','trim|required|xss_clean');
-    $this->form_validation->set_rules('supplier_orgnisation_phone','Supplier Phone','trim|required|xss_clean');
+    $this->form_validation->set_rules('supplier_orgnisation_name','Supplier Orgnisation Name','trim|required|xss_clean');
+    $this->form_validation->set_rules('supplier_orgnisation_phone','Supplier Phone','trim|xss_clean');
     $this->form_validation->set_rules('supplier_mobile','Supplier mobile','trim|xss_clean');
 
     $this->form_validation->set_rules('supplier_email','Supplier email','trim|xss_clean');
-    $this->form_validation->set_rules('supplier_name','Supplier name','trim|required|xss_clean');
+    $this->form_validation->set_rules('supplier_name','Supplier name','trim|xss_clean');
 
     $this->form_validation->set_rules('gstin','GSTIN','trim|xss_clean');
     $this->form_validation->set_rules('supplier_tax_number','Client Service Tax Number','trim|xss_clean');
@@ -120,13 +136,13 @@ class Suppliers extends CI_Controller{
     $this->form_validation->set_rules('supplier_city_b','Supplier billing city','trim|required|xss_clean');
     $this->form_validation->set_rules('supplier_state_b','Supplier billing state','trim|required|xss_clean');
     $this->form_validation->set_rules('supplier_country_b','Supplier billing country','trim|required|xss_clean');
-    $this->form_validation->set_rules('supplier_zip_b','Supplier billing zip','trim|required|xss_clean');
+    $this->form_validation->set_rules('supplier_zip_b','Supplier billing zip','trim|xss_clean');
 
     $this->form_validation->set_rules('supplier_address_s','Supplier shipping address','trim|required|xss_clean');
     $this->form_validation->set_rules('supplier_city_s','Supplier shipping city','trim|required|xss_clean');
     $this->form_validation->set_rules('supplier_state_s','Supplier shipping state','trim|required|xss_clean');
     $this->form_validation->set_rules('supplier_country_s','Supplier shipping country','trim|required|xss_clean');
-    $this->form_validation->set_rules('supplier_zip_s','Supplier shipping zip','trim|required|xss_clean');
+    $this->form_validation->set_rules('supplier_zip_s','Supplier shipping zip','trim|xss_clean');
 
       if($this->form_validation->run()){
         if($this->Suppliers_model->update_supplier($id)){

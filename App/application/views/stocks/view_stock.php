@@ -4,6 +4,8 @@ $csrf = array(
   'name' => $this->security->get_csrf_token_name(),
   'hash' => $this->security->get_csrf_hash()
 );
+$total_avl_stock_amount=0;
+$total_avl_stock_amount=$details[0]["stock"]*$details[0]["unit_cost"];
 ?>
 <div class="row">
  <div class="col-md-12">
@@ -16,9 +18,17 @@ $csrf = array(
             <td><strong>Product Name:</strong></td>
             <td><?php echo htmlspecialchars($details[0]["item_title"]); ?></td>
         </tr>
+         <tr>
+            <td><strong>Product Price:</strong></td>
+            <td><?php echo htmlspecialchars($details[0]["unit_cost"]); ?></td>
+        </tr>
         <tr>
-            <td><strong>Available Stock:</strong></td>
+            <td><strong>Stock:</strong></td>
             <td><?php echo htmlspecialchars($details[0]["stock"]); ?></td>
+        </tr>
+        <tr>
+            <td><strong>Stock Value:</strong></td>
+           <td ><strong><?php echo moneyFormatIndia($total_avl_stock_amount);  ?></strong></td>
         </tr>
          <tr>
             <td><strong>Created:</strong></td>
@@ -31,9 +41,9 @@ $csrf = array(
   <table id="history_tbl" class="table table-bordered table-condensed">
         <thead>
         <tr>
-            <th>Action</th>
             <th>Date</th>
-            <th>Stock</th>
+            <th>In</th>
+            <th>Out</th>
             <th>Description</th>
         </tr>
         </thead>
@@ -65,6 +75,10 @@ $csrf = array(
           "success": fnCallback
         });
       },
+          "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+                $('td:eq(0)', nRow).html(dateSplit(aData[0]));
+                return nRow;
+              },
 });
 });
 </script>

@@ -27,7 +27,7 @@
   <link href="<?php echo base_url('assets/css/custom.css') ?>" rel="stylesheet" type="text/css" />
   <!-- jquery 1.10.2 -->
 <link rel="shortcut icon" href="<?php echo base_url('assets/img/logosm.png');?>">
-  <script src="<?php echo base_url('assets/js/jquery-1.10.2.min.js')?>"></script>
+   <script src="<?php echo base_url('assets/js/jquery.min.js')?>"></script>
   <script src="<?php echo base_url('assets/js/jquery-migrate-1.2.1.min.js')?>"></script>
   <script src="<?php echo base_url('assets/js/jquery-ui.min.js')?>"></script>
   <script src="<?php echo base_url('assets/js/parsley.min.js')?>"></script>
@@ -197,7 +197,7 @@
                   </ul>
                 </li>
               <?php }?>
-               <li class="treeview <?php if($this->uri->segment(1)=='payments' || $this->uri->segment(1)=='receipts')echo  'active';?>">
+               <!-- <li class="treeview <?php if($this->uri->segment(1)=='payments' || $this->uri->segment(1)=='receipts')echo  'active';?>">
                 <a href="#">
                   <i class="fa fa-file"></i> <span>Reports</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
@@ -222,7 +222,7 @@
                     </li>
                   
                   </ul>
-                </li>
+                </li> -->
                     <li class="<?php if($this->uri->segment(1)=='company' )echo  'active'?>">
                   <a href="<?php echo site_url('company'); ?>">
                     <i class="fa fa-cogs"></i> <span>Company Settings</span> </a>
