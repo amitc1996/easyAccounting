@@ -128,7 +128,9 @@ $image='  <br /> <br /> ';
 <style type="text/css">
 table{
   width: 100%;
+  border-collapse: collapse;
 }
+
 .tax-inv-heading{
   margin-top: 0px;
   font-size: 15px;
@@ -166,28 +168,28 @@ table tr td{
   border-right: 0.5px solid;
  
 }
-#goods_table td {
+/*#goods_table td {
 padding: 1px 1px 1px 1px;
  
-}
-#goods_table th {
+}*/
+/*#goods_table th {
 padding: 1px 1px 1px 1px;
  
-}
+}*/
 .text-center{
   text-align: center;
 }
 
 label{display:block; }
 </style>
-<body style="border:0.5px solid;">
-  <table>
+<body>
+  <table style="border-top: 0.5px solid;border-right: 0.5px solid;border-left: 0.5px solid;">
     <tr>
       <td style="width: 80%;text-align: left;vertical-align: top;"><strong>GSTIN : <?php echo htmlspecialchars($company_profile['gstin']);?></strong></td>
       <td style="width: 20%;text-align: right;vertical-align: top;"><em><?php echo $print_type?htmlspecialchars('( '.@$print_type.' )'):''; ?></em></td>
     </tr>
   </table>
-  <table class="border_bottum">
+  <table style="border-bottom: 0.5px solid;border-right: 0.5px solid;border-left: 0.5px solid;">
     <tr>
       <td>
        <p class="text-center tax-inv-heading"><strong><ins>TAX-INVOICE</ins></strong></p>
@@ -197,72 +199,72 @@ label{display:block; }
      </td>
    </tr>
  </table>
- <table class="border_bottum">
+ <table>
    <tr>
-     <td style="width:50%; border-right: 0.5px solid;">
+     <td style="width:50%;vertical-align: top; border-bottom: 0.5px solid;border-left: 0.5px solid;border-right: 0.5px solid;">
       <table>
-       <tr><td>Invoice No.</td><td>: <?php echo $details['sale_details'][0]['invoice_number']; ?></td></tr>
-       <tr><td>Date Of Invoice</td><td>: <?php echo date("m/d/Y", strtotime($details['sale_details'][0]['invoice_date']));?></td></tr>
-       <tr><td>Place of Supply</td><td>: <?php echo $details['sale_details'][0]["place_of_supply"]; ?> </td></tr>
-       <tr><td>Reverse Charge</td><td>: <?php echo ($details['sale_details'][0]['is_reverce_charge']==1)?'Yes':'No';?> </td></tr>
+       <tr><td style="width: 25%;">Invoice No.</td><td style="width: 75%;">: <?php echo $details['sale_details'][0]['invoice_number']; ?></td></tr>
+       <tr><td style="width: 25%;">Date Of Invoice</td><td style="width: 75%;">: <?php echo date("m/d/Y", strtotime($details['sale_details'][0]['invoice_date']));?></td></tr>
+       <tr><td style="width: 25%;">Place of Supply</td><td style="width: 75%;">: <?php echo $details['sale_details'][0]["place_of_supply"]; ?> </td></tr>
+       <tr><td style="width: 25%;">Reverse Charge</td><td style="width: 75%;">: <?php echo ($details['sale_details'][0]['is_reverce_charge']==1)?'Yes':'No';?> </td></tr>
      </table>
    </td>
-   <td style="width:50%;vertical-align: top;">
+  <td style="width:50%;vertical-align: top; border-bottom: 0.5px solid;border-left: 0.5px solid;border-right: 0.5px solid;">
     <table>
-     <tr><td>GR/RR No. </td><td>: </td></tr>
-     <tr><td>Transport</td><td>: <?php echo htmlspecialchars($details['sale_details'][0]["transporter_name"]); ?></td></tr>
-     <tr><td>Vehicle No.</td><td>: <?php echo htmlspecialchars($details['sale_details'][0]["vechicle_no"]); ?></td></tr>
-     <tr><td>Station</td><td>: <?php echo $details['sale_details'][0]["place_of_supply"]; ?> </td></tr>
+     <tr><td style="width: 25%;">GR/RR No. </td><td style="width: 75%;">: </td></tr>
+     <tr><td style="width: 25%;">Transport</td><td style="width: 75%;">: <?php echo htmlspecialchars($details['sale_details'][0]["transporter_name"]); ?></td></tr>
+     <tr><td style="width: 25%;">Vehicle No.</td><td style="width: 75%;">: <?php echo htmlspecialchars($details['sale_details'][0]["vechicle_no"]); ?></td></tr>
+     <tr><td style="width: 25%;">Station</td><td style="width: 75%;">: <?php echo $details['sale_details'][0]["place_of_supply"]; ?> </td></tr>
    </table>
  </td>
 </tr>
 
 </table>
-<table class="border_bottum">
+<table>
 
  <tr>
- <td style="width:50%; border-right: 0.5px solid; padding: 3px 3px 3px 3px;">
+ <td style="width:50%;vertical-align: top; border-bottom: 0.5px solid;border-left: 0.5px solid;border-right: 0.5px solid;">
  
  <table>
  <tr><td><b>Billed to :</b></td></tr>
  </table>
  <table>
  <tr><td><?php echo $details['sale_details'][0]["client_name"]; ?></td></tr>
- <tr><td><?php echo htmlspecialchars($details['sale_details'][0]["b_address"])."<br/>".htmlspecialchars($details['sale_details'][0]["b_city"]).", ".htmlspecialchars($details['sale_details'][0]["b_state"])."<br/>". htmlspecialchars($details['sale_details'][0]["b_country"]).", ".htmlspecialchars(@$details['sale_details'][0]["b_zip"]);?></td></tr>
+ <tr><td><?php echo htmlspecialchars($details['sale_details'][0]["b_address"])."<br/>".htmlspecialchars($details['sale_details'][0]["b_city"]).", ".htmlspecialchars($details['sale_details'][0]["b_state"])."<br/>". htmlspecialchars($details['sale_details'][0]["b_country"])." ".htmlspecialchars(@$details['sale_details'][0]["b_zip"]);?></td></tr>
  </table>
 <table style="margin-top: 5px;">
- <tr><td>Party Mobile No</td><td>: <?php echo htmlspecialchars($details['sale_details'][0]["client_phone"]); ?></td></tr>
- <tr><td>Email</td><td>: <?php echo htmlspecialchars($details['sale_details'][0]["client_email"]); ?></td></tr>
+ <tr><td style="width: 25%;">Party Mobile No</td><td style="width: 75%;">: <?php echo htmlspecialchars($details['sale_details'][0]["client_phone"]); ?></td></tr>
+ <tr><td style="width: 25%;">GSTIN/UIN</td><td style="width: 75%;">: <?php echo htmlspecialchars($details['sale_details'][0]["client_gstin_no"]); ?></td></tr>
  
  </table>
  
  </td>
- <td style="width:50%;padding: 3px 3px 3px 3px;vertical-align: top;">
+ <td style="width:50%;vertical-align: top; border-bottom: 0.5px solid;border-left: 0.5px solid;border-right: 0.5px solid;">
  
  <table>
  <tr><td><b>Shipped to :</b></td></tr>
  </table>
  <table>
  <tr><td><?php echo $details['sale_details'][0]["client_name"]; ?></td></tr>
- <tr><td><?php echo htmlspecialchars($details['sale_details'][0]["s_address"])."<br/>".htmlspecialchars($details['sale_details'][0]["s_city"]).", ".htmlspecialchars($details['sale_details'][0]["s_state"])."<br/>". htmlspecialchars($details['sale_details'][0]["s_country"]).", ".htmlspecialchars(@$details['sale_details'][0]["s_zip"]);?></td></tr>
+ <tr><td><?php echo htmlspecialchars($details['sale_details'][0]["s_address"])."<br/>".htmlspecialchars($details['sale_details'][0]["s_city"]).", ".htmlspecialchars($details['sale_details'][0]["s_state"])."<br/>". htmlspecialchars($details['sale_details'][0]["s_country"])." ".htmlspecialchars(@$details['sale_details'][0]["s_zip"]);?></td></tr>
  </table>
  <table style="margin-top: 5px;">
- <tr><td>Party Mobile No</td><td>: <?php echo htmlspecialchars($details['sale_details'][0]["client_phone"]); ?></td></tr>
- <tr><td>Email</td><td>: <?php echo htmlspecialchars($details['sale_details'][0]["client_email"]); ?></td></tr>
+ <tr><td style="width: 25%;">Party Mobile No</td><td style="width: 75%;">: <?php echo htmlspecialchars($details['sale_details'][0]["client_phone"]); ?></td></tr>
+ <tr><td style="width: 25%;">GSTIN/UIN</td><td style="width: 75%;">: <?php echo htmlspecialchars($details['sale_details'][0]["client_gstin_no"]); ?></td></tr>
  
  </table>
  </td>
  </tr>
 </table>
-<table id="goods_table"  style= "margin-top:15px; border-bottom: 0.5px solid;border-top: 0.5px solid;">
+<table id="goods_table"  style= "border-bottom: 0.5px solid; border-right: 0.5px solid;border-left: 0.5px solid;">
 <tr>
  <th style="width:5px;font-size: 12px;">S.N.</th>
  <th style="width: 120px;font-size: 12px;">Description Of Goods</th>
  <th style="width: 40px;font-size: 12px;">HSN/SAC Code</th>
  <th style="width: 25px;font-size: 12px;">Qty.</th>
  <th style="width: 25px;font-size: 12px;">Unit</th>
- <th style="width: 40px;font-size: 12px;">List Price</th>
- <th style="width: 25px;font-size: 12px;">Discount</th>
+ <th style="width: 40px;font-size: 12px;">Rate</th>
+ <th style="width: 25px;font-size: 12px;">Disc</th>
  <th style="width: 25px;font-size: 12px;">CGST Rate</th>
  <th style="width: 25px;font-size: 12px;">CGST Amount</th>
  <th style="width: 25px;font-size: 12px;">SGST Rate</th>
@@ -297,8 +299,8 @@ label{display:block; }
         }
      }
      
-     if(count($details)<10){
-     for($j=1; $j <= (10-count($details));$j++)
+     if(count($details)<15){
+     for($j=1; $j <= (15-count($details));$j++)
      {
      ?>   
      <tr>
@@ -318,7 +320,7 @@ label{display:block; }
      <?php  
      } }
      ?>
-     <table  style="border-bottom:0.5px solid">
+     <table  style="border-bottom:0.5px solid;border-left:0.5px solid;">
      <tr>
          <td colspan="11">Amount Chargeable (in words): <strong><?php echo ucfirst(convert_number_to_words((int)round($sale_details["grand_total"]))); ?> only.</td>
          <td colspan="1"><strong><?php echo $sale_details["grand_total"];  ?></strong></td>
@@ -333,7 +335,7 @@ label{display:block; }
      </tr>
    </table>
 </table>
-<table  style="width: 701px; border-bottom: 0.5px solid;">
+<table  style="width: 701px; border-bottom: 0.5px solid;border-left:0.5px solid;">
 <tr>
 
  <td style="width:401px; padding:4px;border-right:0.5px solid;font-size: 11px;vertical-align: top;">
@@ -364,10 +366,15 @@ label{display:block; }
        <td style="font-size: 12px;">5</td>
        <td style="font-size: 12px; border-right: 0px;">8</td>
     </tr>
+     <tr>
+       <td style="font-size: 12px;">5</td>
+       <td style="font-size: 12px;">5</td>
+       <td style="font-size: 12px; border-right: 0px;">8</td>
+    </tr>
   </table>
  </td>
 
- <td style="width:260px;padding: 5px 0px 5px 0px;">
+ <td style="width:260px;padding: 5px 0px 5px 0px; border-right:0.5px solid;">
      <table>
  <tr><td><b>Bank Details :</b></td></tr>
  </table>
@@ -381,7 +388,7 @@ label{display:block; }
  </td>
 </tr>
 </table>
-<table  style="width: 701px;border-bottom:0.5px solid">
+<table  style="width: 701px;border-bottom:0.5px solid;border-right:0.5px solid;border-left:0.5px solid;">
 <tr>
 <?php if($company_profile["terms"]){?>
  <td style="width:401px; padding: 4px; border-right: 0.5px solid; font-size: 11px;vertical-align: top;">

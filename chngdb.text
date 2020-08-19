@@ -1,0 +1,14 @@
+date 21-07-2020
+==========================================================================================
+ALTER TABLE `stock_histories` ADD `stock_in` INT(11) NOT NULL DEFAULT '0' AFTER `action`;
+ALTER TABLE `stock_histories` ADD `stock_out` INT(11) NOT NULL DEFAULT '0' AFTER `stock_in`;
+UPDATE `stock_histories` SET `stock_in`=`stock`
+ALTER TABLE `stock_histories` ADD `opening_stock` INT(11) NOT NULL DEFAULT '0' AFTER `stock_out`, ADD `closing_stock` INT(11) NOT NULL DEFAULT '0' AFTER `opening_stock`;
+ALTER TABLE `purchase_items` CHANGE `item_qty` `item_qty` INT(11) NOT NULL;
+ALTER TABLE `stock_histories` ADD `purchase_id` INT(11) NULL DEFAULT NULL AFTER `description`;
+ALTER TABLE `stock_histories` ADD `sale_id` INT(11) NULL DEFAULT NULL AFTER `purchase_id`;
+ALTER TABLE `sales` CHANGE `client_tax_no` `client_gstin_no` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+ALTER TABLE `sales` ADD `deleted_on` DATETIME NULL DEFAULT NULL AFTER `is_deleted`;
+ALTER TABLE `sales` ADD `deleted_by` INT(11) NULL DEFAULT NULL AFTER `deleted_on`;
+ALTER TABLE `purchases` ADD `deleted_on` DATETIME NULL DEFAULT NULL AFTER `is_deleted`;
+ALTER TABLE `purchases` ADD `deleted_by` INT(11) NULL DEFAULT NULL AFTER `deleted_on`;

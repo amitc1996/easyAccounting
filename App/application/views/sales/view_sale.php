@@ -1,9 +1,7 @@
 <?php
 if($details)
 {
-
   $sale_details = $details['sale_details'][0];
- // echo"<pre>";print_r($sale_details) ;die;
   $sale_items = $details['sale_items'];
   ?>
 <div class="content-wrapper" style="min-height: 916px;">
@@ -40,10 +38,10 @@ if($details)
             <strong><?php echo $company_profile['company_name'];?></strong><br>
             <?php echo $company_profile['address'];?><br>
             <?php echo $company_profile['city'].', '.$company_profile['state'];?><br>
-            <?php echo $company_profile['country'].', '.$company_profile['zip'];?><br>
+            <?php echo $company_profile['country'].' '.$company_profile['zip'];?><br>
             Phone: <?php echo $company_profile['mobile'];?><br>
             Email: <?php echo $company_profile['email'];?><br>
-            <?php echo ($company_profile["is_gst"]==1) ? 'GSTIN': 'TIN' ; ?>: <?php echo ($company_profile["is_gst"]==1) ?htmlspecialchars($company_profile['gstin']): htmlspecialchars($company_profile['tax']);?>
+            GSTIN: <?php echo htmlspecialchars($company_profile['gstin']);?>
           </address>
         </div>
         <!-- /.col -->
@@ -53,10 +51,10 @@ if($details)
             <strong><?php echo $sale_details['client_name'];?></strong><br>
             <?php echo $sale_details['b_address'];?><br>
             <?php echo $sale_details['b_city'].', '.$sale_details['b_state'];?><br>
-            <?php echo $sale_details['b_country'].', '.$sale_details['b_zip'];?><br>
+            <?php echo $sale_details['b_country'].' '.$sale_details['b_zip'];?><br>
             Phone: <?php echo $sale_details['client_phone'];?><br>
             Email: <?php echo $sale_details['client_email'];?><br>
-            Tax: <?php echo $sale_details['client_tax_no'];?>
+            GSTIN/UIN: <?php echo $sale_details['client_gstin_no'];?>
           </address>
         </div>
          <!-- /.col -->
@@ -69,7 +67,7 @@ if($details)
             <?php echo $sale_details['s_country'].', '.$sale_details['s_zip'];?><br>
             Phone: <?php echo $sale_details['client_phone'];?><br>
             Email: <?php echo $sale_details['client_email'];?><br>
-            Tax: <?php echo $sale_details['client_tax_no'];?>
+            GSTIN/UIN: <?php echo $sale_details['client_gstin_no'];?>
           </address>
         </div>
         <!-- /.col -->
@@ -89,12 +87,13 @@ if($details)
           <table class="table table-bordered table-striped table-condensed">
             <thead>
             <tr>
-              <th>Serial</th>
-              <th>Product</th>
+              <th>S.N.</th>
+              <th>Description Of Goods</th>
+              <th>HSN/SAC Code</th>
+              <th>Qty.</th>
               <th>Unit</th>
-              <th>Price</th>
-              <th>Qty</th>
-              <th>Subtotal</th>
+              <th>Rate</th>
+              <th>Sub Total</th>
               <th colspan="2">Discount</th>
               <th colspan="2">IGST</th>
               <th colspan="2">CGST</th>
@@ -110,9 +109,10 @@ if($details)
             <tr>
               <td><?php echo $i;?></td>
               <td><?php echo $sale_item['item_title'];?></td>
+              <td><?php echo $sale_item['hsn_sac_code'];?></td>
+              <td><?php echo $sale_item['item_qty'];?></td>
               <td><?php echo $sale_item['measurement_name'];?></td>
               <td><?php echo $sale_item['unit_cost'];?></td>
-              <td><?php echo $sale_item['item_qty'];?></td>
               <td><?php echo $sale_item['total_cost'];?></td>
               <td><?php echo $sale_item['discount'];?></td>
               <td><?php echo $sale_item['discount_amount'];?></td>

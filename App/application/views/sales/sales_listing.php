@@ -150,7 +150,7 @@ $csrf = array(
              var links="";
               links += '<a href="<?php echo site_url('Sales/view_sale').'/';?>'+aData[7]+'" data-sale_id="'+aData[7]+'" title="View Details" class="btn btn-default btn-xs view_sales_records" style="margin-right:5px;"><span class="glyphicon glyphicon-search"></span></a>';
                if(aData[5]!=2){
-               links += '<a href="<?php echo site_url('sales/receipt'); ?>/'+aData[7]+'" data-purchase_id="'+aData[7]+'" title="Pay Now" class="btn btn-success btn-xs view_purchase" style="margin-right:7px;" ><i class="fa fa-money"></i></a>';  
+               links += '<a href="<?php echo site_url('sales/receipt'); ?>/'+aData[7]+'" data-purchase_id="'+aData[7]+'" title="Pay Now" class="btn btn-warning btn-xs view_purchase" style="margin-right:7px;" ><i class="fa fa-money"></i></a>';  
 
               links += '<a href="<?php echo site_url('sales/edit_sale'); ?>/'+aData[7]+'" data-sale_id="'+aData[7]+'" title="Edit Details" class="btn btn-custom btn-primary btn-xs purchase_edit" style="margin-right:7px;"><span class="glyphicon glyphicon-pencil"></span></a>'; 
 
@@ -158,7 +158,7 @@ $csrf = array(
                } 
               links += '<a href="" data-sale_id="'+aData[7]+'" title="Print sale" class="btn btn-primary btn-xs print_sale" style="margin-right:5px;" ><span class="fa fa-file"></span></a>';
 
-              links += '<a href="" data-sale_id="'+aData[7]+'" title="Send Invoice" class="btn btn-warning btn-xs send_invoice" style="margin-right:5px;" ><span class="fa fa-envelope"></span></a>';
+              links += '<a href="" data-sale_id="'+aData[7]+'" title="Send Invoice" class="btn btn-success btn-xs send_invoice" style="margin-right:5px;" ><span class="fa fa-envelope"></span></a>';
 
                 $('td:eq(5)', nRow).html(status);
                 $('td:eq(7)', nRow).html(links);

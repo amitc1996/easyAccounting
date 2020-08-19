@@ -31,14 +31,14 @@ $csrf = array(
           <table id="purchase_listing" class="table table-bordered table-striped table-condensed">
             <thead>
               <tr>
-               <th>Po Number</th>
-               <th>Supplier</th>
-               <th>Purchase Date</th>
-               <th>Paid Amount</th>
-               <th>Grand Total</th>
-               <th>Payment Status</th>
-               <th>Created</th>
-               <th class="actions">Actions</th>
+               <th style="width: 10%">Po Number</th>
+               <th style="width: 25%">Supplier</th>
+               <th style="width: 10%">Purchase Date</th>
+               <th style="width: 10%">Paid Amount</th>
+               <th style="width: 10%">Grand Total</th>
+               <th style="width: 10%">Payment Status</th>
+               <th style="width: 10%">Created</th>
+               <th style="width: 15%">Actions</th>
              </tr>
            </thead>
          </table>
