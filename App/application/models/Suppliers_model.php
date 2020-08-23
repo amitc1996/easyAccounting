@@ -24,12 +24,6 @@ class Suppliers_model extends CI_Model{
       "supplier_tax_number"=>$this->input->post("supplier_tax_number"),
        "gstin"=>$this->input->post("gstin"),
 
-      "supplier_address_s"=>$this->input->post("supplier_address_s"),
-      "supplier_city_s"=>$this->input->post("supplier_city_s"),
-      "supplier_state_s"=>$this->input->post("supplier_state_s"),
-      "supplier_country_s"=>$this->input->post("supplier_country_s"),
-      "supplier_zip_s"=>$this->input->post("supplier_zip_s"),
-
       "supplier_address_b"=>$this->input->post("supplier_address_b"),
       "supplier_city_b"=>$this->input->post("supplier_city_b"),
       "supplier_state_b"=>$this->input->post("supplier_state_b"),
@@ -77,12 +71,6 @@ class Suppliers_model extends CI_Model{
       "supplier_mobile"=>$this->input->post("supplier_mobile"),
       "supplier_tax_number"=>$this->input->post("supplier_tax_number"),
        "gstin"=>$this->input->post("gstin"),
-
-      "supplier_address_s"=>$this->input->post("supplier_address_s"),
-      "supplier_city_s"=>$this->input->post("supplier_city_s"),
-      "supplier_state_s"=>$this->input->post("supplier_state_s"),
-      "supplier_country_s"=>$this->input->post("supplier_country_s"),
-      "supplier_zip_s"=>$this->input->post("supplier_zip_s"),
 
       "supplier_address_b"=>$this->input->post("supplier_address_b"),
       "supplier_city_b"=>$this->input->post("supplier_city_b"),

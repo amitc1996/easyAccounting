@@ -39,7 +39,7 @@ $csrf = array(
 
             <!-- /.box-header -->
             <div class="box-body">
-              <strong><i class="fa fa-book margin-r-5"></i>Company Name</strong>
+              <strong><i class="fa fa-building-o margin-r-5"></i>Company Name</strong>
 
               <p class="text-muted">
                <?php echo @$details[0]['supplier_orgnisation_name'];?>
@@ -47,7 +47,7 @@ $csrf = array(
 
               <hr>
 
-              <strong><i class="fa fa-book margin-r-5"></i>Contact Person Name</strong>
+              <strong><i class="fa fa-user-circle margin-r-5"></i>Contact Person Name</strong>
 
               <p class="text-muted">
              <?php echo @$details[0]['supplier_name'];?>
@@ -55,7 +55,7 @@ $csrf = array(
 
               <hr>
 
-               <strong><i class="fa fa-book margin-r-5"></i>Phone</strong>
+               <strong><i class="fa fa-phone margin-r-5"></i>Phone</strong>
 
               <p class="text-muted">
                <?php echo @$details[0]['supplier_orgnisation_phone'];?>
@@ -63,7 +63,7 @@ $csrf = array(
 
               <hr>
 
-               <strong><i class="fa fa-book margin-r-5"></i>Email</strong>
+               <strong><i class="fa fa-envelope margin-r-5"></i>Email</strong>
 
               <p class="text-muted">
                <?php echo @$details[0]['supplier_email'];?>
@@ -76,18 +76,9 @@ $csrf = array(
               <p class="text-muted">
                <?php echo @$details[0]['gstin'];?>
               </p>
-
               <hr>
-
-              <strong><i class="fa fa-map-marker margin-r-5"></i> Billing Address </strong>
-
+              <strong><i class="fa fa-map-marker margin-r-5"></i>Address </strong>
               <p class="text-muted"><?php echo @$details[0]['supplier_address_b'].','.@$details[0]['supplier_city_b'].','.@$details[0]['supplier_state_b'].','.@$details[0]['supplier_country_b'].','.@$details[0]['supplier_zip_b'];?></p>
-
-              <hr>
-
-              <strong><i class="fa fa-map-marker margin-r-5"></i> Shipping Address </strong>
-
-              <p class="text-muted"><?php echo @$details[0]['supplier_address_s'].','.@$details[0]['supplier_city_s'].','.@$details[0]['supplier_state_s'].','.@$details[0]['supplier_country_s'].','.@$details[0]['supplier_zip_s'];?></p>
             </div>
             <!-- /.box-body -->
           </div>

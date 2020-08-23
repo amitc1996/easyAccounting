@@ -49,8 +49,8 @@ class Products extends CI_Controller
     $this->form_validation->set_rules('cgst','CGST','required|trim|xss_clean');
     $this->form_validation->set_rules('sgst','SGST','required|trim|xss_clean');
     $this->form_validation->set_rules('measurement','Unit','required|trim|xss_clean');
-    $this->form_validation->set_rules('unit_cost','Product Price','trim|required|xss_clean');
-    $this->form_validation->set_rules('salling_price','Product Price','trim|required|xss_clean');
+    $this->form_validation->set_rules('unit_cost_exclude_gst','Product Price','trim|required|xss_clean');
+    $this->form_validation->set_rules('salling_price_exclude_gst','Salling Price','trim|required|xss_clean');
     $this->form_validation->set_rules('hsn_sac_code','Hsn/Sac','trim|xss_clean');
     $this->form_validation->set_rules('product_description','Description','trim|xss_clean');
     if($this->form_validation->run()){
@@ -144,8 +144,8 @@ class Products extends CI_Controller
     $this->form_validation->set_rules('cgst','CGST','required|trim|xss_clean');
     $this->form_validation->set_rules('sgst','SGST','required|trim|xss_clean');
     $this->form_validation->set_rules('measurement','Unit','required|trim|xss_clean');
-    $this->form_validation->set_rules('unit_cost','Product Price','trim|required|xss_clean');
-    $this->form_validation->set_rules('salling_price','Product Price','trim|required|xss_clean');
+    $this->form_validation->set_rules('unit_cost_exclude_gst','Product Price','trim|required|xss_clean');
+    $this->form_validation->set_rules('salling_price_exclude_gst','Salling Price','trim|required|xss_clean');
     $this->form_validation->set_rules('hsn_sac_code','Hsn/Sac','trim|xss_clean');
     $this->form_validation->set_rules('product_description','Description','trim|xss_clean');
     if($this->form_validation->run()){

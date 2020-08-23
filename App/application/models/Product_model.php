@@ -16,7 +16,7 @@ class Product_model extends CI_Model
    
     $this->db->where('product_id',$id)
     ->select('products.product_id,products.item_title,products.sku,products.category_id,
-    products.brand_id,products.measurement,products.igst,products.cgst,products.sgst,products.stock,products.unit_cost,products.salling_price,products.created,categories.category_name,brands.brand_name,measurements.measurement_name,products.product_description,products.hsn_sac_code');
+    products.brand_id,products.measurement,products.igst,products.cgst,products.sgst,products.stock,products.unit_cost,products.salling_price,products.created,categories.category_name,brands.brand_name,measurements.measurement_name,products.product_description,products.hsn_sac_code,products.unit_cost_exclude_gst,products.salling_price_exclude_gst');
     $this->db->join('categories','products.category_id = categories.category_id','left');
     $this->db->join('brands','products.brand_id = brands.brand_id','left');
     $this->db->join('measurements','products.measurement = measurements.measurement_id','left');
@@ -31,6 +31,7 @@ class Product_model extends CI_Model
   * @return boolean
   */
   public function add_product(){
+  
      $data = array(
         'sku'=>$this->input->post('sku')?$this->input->post('sku'):strtoupper(uniqid('SKU')),
         'item_title' => $this->input->post('product_name'),
@@ -42,6 +43,8 @@ class Product_model extends CI_Model
         'measurement' => $this->input->post('measurement'),
         'unit_cost' => $this->input->post('unit_cost'),
         'salling_price' => $this->input->post('salling_price'),
+        'unit_cost_exclude_gst' => $this->input->post('unit_cost_exclude_gst'),
+        'salling_price_exclude_gst' => $this->input->post('salling_price_exclude_gst'),
         'hsn_sac_code' => $this->input->post('hsn_sac_code'),
         'product_description' => $this->input->post('product_description'),
         'created' => date('Y-m-d H:i:s',time()),
@@ -69,7 +72,7 @@ class Product_model extends CI_Model
   * @return bool
   */
   public function update_product($id){
-      
+     
       $data = array(
         'item_title' => $this->input->post('product_name'),
         'category_id' => $this->input->post('category_name'),
@@ -80,6 +83,8 @@ class Product_model extends CI_Model
         'measurement' => $this->input->post('measurement'),
         'unit_cost' => $this->input->post('unit_cost'),
         'salling_price' => $this->input->post('salling_price'),
+        'unit_cost_exclude_gst' => $this->input->post('unit_cost_exclude_gst'),
+        'salling_price_exclude_gst' => $this->input->post('salling_price_exclude_gst'),
         'hsn_sac_code' => $this->input->post('hsn_sac_code'),
         'product_description' => $this->input->post('product_description'),
         'last_updated' => date('Y-m-d H:i:s',time()),

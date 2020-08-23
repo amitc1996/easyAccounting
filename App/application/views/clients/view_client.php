@@ -39,7 +39,7 @@ $csrf = array(
 
             <!-- /.box-header -->
             <div class="box-body">
-              <strong><i class="fa fa-book margin-r-5"></i>Company Name</strong>
+              <strong><i class="fa fa-building-o margin-r-5"></i>Company Name</strong>
 
               <p class="text-muted">
                <?php echo @$details[0]['client_orgnisation_name'];?>
@@ -47,7 +47,7 @@ $csrf = array(
 
               <hr>
 
-              <strong><i class="fa fa-book margin-r-5"></i>Contact Person Name</strong>
+              <strong><i class="fa fa-user-circle margin-r-5"></i>Contact Person Name</strong>
 
               <p class="text-muted">
              <?php echo @$details[0]['client_name'];?>
@@ -55,7 +55,7 @@ $csrf = array(
 
               <hr>
 
-               <strong><i class="fa fa-book margin-r-5"></i>Phone</strong>
+               <strong><i class="fa fa-phone margin-r-5"></i>Phone</strong>
 
               <p class="text-muted">
                <?php echo @$details[0]['client_orgnisation_phone'];?>
@@ -63,7 +63,7 @@ $csrf = array(
 
               <hr>
 
-               <strong><i class="fa fa-book margin-r-5"></i>Email</strong>
+               <strong><i class="fa fa-envelope margin-r-5"></i>Email</strong>
 
               <p class="text-muted">
                <?php echo @$details[0]['client_email'];?>

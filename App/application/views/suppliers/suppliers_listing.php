@@ -38,7 +38,7 @@ $supplier_name = array(
   'id'  => 'supplier_name',
   'value' => set_value('supplier_name'),
   'class'=>'form-control',
-  'placeholder'=>'Name',
+  'placeholder'=>'Contact Person Name',
 );
 $supplier_mobile = array(
   'name'  => 'supplier_mobile',
@@ -96,49 +96,6 @@ $supplier_zip_b = array(
   'class'=>'form-control',
   'placeholder'=>'Pincode',
   'data-parsley-pattern'=>'^[\d\+\-\.\(\)\/\s]*$',
-  'data-parsley-pattern-message'=>'Enter valid pincode'
-);
-
-$supplier_address_s = array(
-  'name'  => 'supplier_address_s',
-  'id'  => 'supplier_address_s',
-  'value' => set_value('supplier_address_s'),
-  'class'=>'form-control s_addr',
-  'placeholder'=>'Address',
-  'data-parsley-required'=>'true',
-  'rows'=>4
-);
-$supplier_city_s = array(
-  'name'  => 'supplier_city_s',
-  'id'  => 'supplier_city_s',
-  'value' => set_value('supplier_city_s'),
-  'class'=>'form-control s_addr',
-  'placeholder'=>'City',
-  'data-parsley-required'=>'true'
-);
-$supplier_state_s = array(
-  'name'  => 'supplier_state_s',
-  'id'  => 'supplier_state_s',
-  'value' => set_value('supplier_state_s'),
-  'class'=>'form-control s_addr',
-  'placeholder'=>'State',
-  'data-parsley-required'=>'true'
-);
-$supplier_country_s = array(
-  'name'  => 'supplier_country_s',
-  'id'  => 'supplier_country_s',
-  'value' => set_value('supplier_country_s'),
-  'class'=>'form-control s_addr',
-  'placeholder'=>'Country',
-  'data-parsley-required'=>'true'
-);
-$supplier_zip_s = array(
-  'name'  => 'supplier_zip_s',
-  'id'  => 'supplier_zip_s',
-  'value' => set_value('supplier_zip_s'),
-  'class'=>'form-control s_addr',
-  'placeholder'=>'Pincode',
-    'data-parsley-pattern'=>'^[\d\+\-\.\(\)\/\s]*$',
   'data-parsley-pattern-message'=>'Enter valid pincode'
 );
 $csrf = array(
@@ -215,7 +172,7 @@ $csrf = array(
           <?php echo form_input($supplier_email); ?>
         </div>
         <div class="form-group col-md-6">
-          <label class="control-label" for="supplier_name">Name:</label>
+          <label class="control-label" for="supplier_name">Contact Person Name:</label>
           <?php echo form_input($supplier_name); ?>
         </div>
         <div class="form-group col-md-6">
@@ -232,10 +189,6 @@ $csrf = array(
         </div>
       </div>
       <div class="row">
-          <div class="col-md-12 addr_label">
-          <h4>Billing Address:</h4>
-          </div>
-      
         <div class="form-group col-md-12">
          <hr>
           <label class="control-label" for="supplier_address_b">Address:</label>
@@ -257,39 +210,6 @@ $csrf = array(
           <label class="control-label" for="supplier_zip_b">Pincode:</label>
           <?php echo form_input($supplier_zip_b); ?>
         </div>
-      </div>
-       <div class="clearfix"></div>
-        <div class="row">
-          <div class="col-md-12 addr_label">
-          <h4>Shipping Address:</h4>
-          </div>
-        <div class="form-group col-md-12">
-          <hr>
-          <div class="checkbox" style="margin-top: -5px;">
-            <label>
-              <input type="checkbox" id="sam_as_billing_addrs"> Same as billing address
-            </label>
-          </div>
-          <label class="control-label" for="supplier_address_s">Address:</label>
-          <?php echo form_textarea($supplier_address_s); ?>
-        </div>
-        <div class="form-group col-md-3">
-          <label class="control-label" for="supplier_city_s">City:</label>
-          <?php echo form_input($supplier_city_s); ?>
-        </div>
-        <div class="form-group col-md-3">
-          <label class="control-label" for="supplier_state_s">State:</label>
-          <?php echo form_input($supplier_state_s); ?>
-        </div>
-        <div class="form-group col-md-3">
-          <label class="control-label" for="supplier_country_s">Country:</label>
-          <?php echo form_input($supplier_country_s); ?>
-        </div>
-        <div class="form-group col-md-3">
-          <label class="control-label" for="supplier_zip_s">Pincode:</label>
-          <?php echo form_input($supplier_zip_s); ?>
-        </div>
-        <div class="clearfix"></div>
       </div>
      </div>
      <div class="modal-footer">

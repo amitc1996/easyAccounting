@@ -1,5 +1,4 @@
 <?php
-
 $product_name = array(
   'name'  => 'product_name',
   'id'  => 'product_name',
@@ -18,21 +17,52 @@ $sku = array(
 $unit_cost = array(
   'name'  => 'unit_cost',
   'id'  => 'unit_cost',
-  'value' => set_value('unit_cost'),
+  'value' => set_value('unit_cost',0),
   'class'=>'form-control',
   'placeholder'=>'Product Price',
   'data-parsley-required'=>'true',
   'min'=>'0',
+  'step'=>'0.01',
+  'type'=>'number',
+  'readonly'=>'readonly'
 );
 $salling_price = array(
   'name'  => 'salling_price',
   'id'  => 'salling_price',
-  'value' => set_value('salling_price'),
+  'value' => set_value('salling_price',0),
   'class'=>'form-control',
   'placeholder'=>'Salling Price',
   'data-parsley-required'=>'true',
   'min'=>'0',
+  'step'=>'0.01',
+  'type'=>'number',
+  'readonly'=>'readonly'
 );
+
+$unit_cost_exclude_gst = array(
+  'name'  => 'unit_cost_exclude_gst',
+  'id'  => 'unit_cost_exclude_gst',
+  'value' => set_value('unit_cost_exclude_gst',0),
+  'class'=>'form-control unit_cost_exclude_gst',
+  'placeholder'=>'Product Price(Exc. GST)',
+  'data-parsley-required'=>'true',
+  'min'=>'0',
+  'step'=>'0.01',
+  'type'=>'number'
+);
+$salling_price_exclude_gst = array(
+  'name'  => 'salling_price_exclude_gst',
+  'id'  => 'salling_price_exclude_gst',
+  'value' => set_value('salling_price_exclude_gst',0),
+  'class'=>'form-control salling_price_exclude_gst',
+  'placeholder'=>'Salling Price(Exc. GST)',
+  'data-parsley-required'=>'true',
+  'min'=>'0',
+  'step'=>'0.01',
+  'type'=>'number'
+);
+
+
 
 $category_options = array(''=>'--Select--');
 if($categories && count($categories)> 0)
@@ -87,7 +117,7 @@ $igst = array(
   'name'  => 'igst',
   'id'  => 'igst',
   'value' => set_value('igst',0),
-  'class'=>'form-control',
+  'class'=>'form-control gst',
   'placeholder'=>'IGST %',
    'type'=>'number',
    'min'=>'0',
@@ -98,7 +128,7 @@ $cgst = array(
   'name'  => 'cgst',
   'id'  => 'cgst',
   'value' => set_value('cgst',0),
-  'class'=>'form-control',
+  'class'=>'form-control gst',
   'placeholder'=>'CGST %',
    'type'=>'number',
    'min'=>'0',
@@ -109,7 +139,7 @@ $sgst = array(
   'name'  => 'sgst',
   'id'  => 'sgst',
   'value' => set_value('sgst',0),
-  'class'=>'form-control',
+  'class'=>'form-control gst',
   'placeholder'=>'SGST %',
   'type'=>'number',
   'min'=>'0',
@@ -228,21 +258,29 @@ $csrf = array(
     <label class="control-label" for="taxes">SGST %:</label>
     <?php echo form_input($sgst); ?>
   </div>
-  <div class="form-group col-md-6">
+  <div class="form-group col-md-3">
     <label class="control-label" for="measurements">Unit:</label>
     <?php  echo form_dropdown($measurements,$measurement_options,$measurements['value']); ?>
   </div>
   <div class="form-group col-md-3">
-    <label class="control-label" for="unit_cost">Product Price:</label>
+    <label class="control-label" for="hsn_sac_code">HSN/SAC Code:</label>
+    <?php echo form_input($hsn_sac_code); ?>
+  </div>
+  <div class="form-group col-md-3">
+    <label class="control-label" for="unit_cost_exclude_gst">Product Price(Exc. GST):</label>
+    <?php echo form_input($unit_cost_exclude_gst); ?>
+  </div>
+  <div class="form-group col-md-3">
+    <label class="control-label" for="salling_price_exclude_gst">Salling Price(Exc. GST):</label>
+    <?php echo form_input($salling_price_exclude_gst); ?>
+  </div>
+  <div class="form-group col-md-3">
+    <label class="control-label" for="unit_cost">Product Price(Inc. GST):</label>
     <?php echo form_input($unit_cost); ?>
   </div>
   <div class="form-group col-md-3">
-    <label class="control-label" for="salling_price">Salling Price:</label>
+    <label class="control-label" for="salling_price">Salling Price(Inc. GST):</label>
     <?php echo form_input($salling_price); ?>
-  </div>
-   <div class="form-group col-md-6">
-    <label class="control-label" for="hsn_sac_code">HSN/SAC Code:</label>
-    <?php echo form_input($hsn_sac_code); ?>
   </div>
   <div class="form-group col-md-12">
     <label class="control-label" for="product_description">Product Description:</label>
@@ -447,6 +485,20 @@ $(document).ready(function(){
     }
     return false;
   });
+
+   $(document).on('keyup keypress blur change','.gst,.unit_cost_exclude_gst,.salling_price_exclude_gst',function (){
+  calculate_price();
+ });
+
 });
 
+function calculate_price(){
+  console.log('sdf')
+  var total_gst_tax=0;
+  $.each($('.gst'),function (i,v){
+      total_gst_tax=total_gst_tax+parseFloat($(v).val());
+    })
+$('#unit_cost').val(parseFloat($('#unit_cost_exclude_gst').val())+parseFloat($('#unit_cost_exclude_gst').val()*total_gst_tax/100));
+$('#salling_price').val(parseFloat($('#salling_price_exclude_gst').val())+parseFloat($('#salling_price_exclude_gst').val()*total_gst_tax/100));
+}
 </script>

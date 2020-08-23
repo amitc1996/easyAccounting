@@ -12,3 +12,7 @@ ALTER TABLE `sales` ADD `deleted_on` DATETIME NULL DEFAULT NULL AFTER `is_delete
 ALTER TABLE `sales` ADD `deleted_by` INT(11) NULL DEFAULT NULL AFTER `deleted_on`;
 ALTER TABLE `purchases` ADD `deleted_on` DATETIME NULL DEFAULT NULL AFTER `is_deleted`;
 ALTER TABLE `purchases` ADD `deleted_by` INT(11) NULL DEFAULT NULL AFTER `deleted_on`;
+
+ALTER TABLE `suppliers` DROP `supplier_address_s`, DROP `supplier_city_s`, DROP `supplier_state_s`, DROP `supplier_country_s`, DROP `supplier_zip_s`;
+ALTER TABLE `products` ADD `unit_cost_exclude_gst` DECIMAL(10,2) NOT NULL AFTER `salling_price`, ADD `salling_price_exclude_gst` DECIMAL(10,2) NOT NULL AFTER `unit_cost_exclude_gst`;
+ALTER TABLE `product_histories` ADD `unit_cost_exclude_gst` DECIMAL(10,2) NOT NULL AFTER `salling_price`, ADD `salling_price_exclude_gst` DECIMAL(10,2) NOT NULL AFTER `unit_cost_exclude_gst`
