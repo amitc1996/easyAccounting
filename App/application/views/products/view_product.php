@@ -54,11 +54,19 @@ if($details){
             <td><?php  echo htmlspecialchars($details[0]["measurement_name"]); ?></td>
         </tr>
          <tr>
-            <td><strong>Product Price:</strong></td>
+            <td><strong>Product Price(Exc. GST):</strong></td>
+            <td><?php  echo htmlspecialchars($details[0]["unit_cost_exclude_gst"]); ?></td>
+        </tr>
+         <tr>
+            <td><strong>Salling price(Exc. GST):</strong></td>
+            <td><?php  echo htmlspecialchars($details[0]["salling_price_exclude_gst"]); ?></td>
+        </tr>
+        <tr>
+            <td><strong>Product Price(Inc. GST):</strong></td>
             <td><?php  echo htmlspecialchars($details[0]["unit_cost"]); ?></td>
         </tr>
          <tr>
-            <td><strong>Salling price:</strong></td>
+            <td><strong>Salling price(Inc. GST):</strong></td>
             <td><?php  echo htmlspecialchars($details[0]["salling_price"]); ?></td>
         </tr>
   </table>
