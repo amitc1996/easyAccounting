@@ -13,7 +13,7 @@ class Purchase_model extends CI_Model
   */
 
   public function save_purchase(){
- 
+  
     $user_id=$this->aauth->get_user_id();
        $data = array(
         "po_number"=>$this->input->post("po_number"),
@@ -45,6 +45,7 @@ class Purchase_model extends CI_Model
         "delivery_note_date"=>$this->input->post("delevery_note_date"),
         "sub_total"=>$this->input->post("sub_total_amount"),
         "total_discount"=>$this->input->post("total_discount_amount"),
+        "taxable_amount"=>$this->input->post("taxable_amount"),
         "total_igst"=>$this->input->post("tigst"),
         "total_cgst"=>$this->input->post("tcgst"),
         "total_sgst"=>$this->input->post("tsgst"),
@@ -76,6 +77,7 @@ class Purchase_model extends CI_Model
                 $itemData["total_cost"] = $product_item['total_amount'];
                 $itemData["discount"] = $product_item['discount_percent'];
                 $itemData["discount_amount"] = $product_item['discount_amount'];
+                $itemData["taxable_amount"] = $product_item['taxable_amount'];
                 $itemData["cgst"] = $product_item['tax_cgst_amount'];
                 $itemData["cgst_amount"] = $product_item['tax_cgst_amount'];
                 $itemData["igst"] = $product_item['tax_igst_percent'];
@@ -197,6 +199,7 @@ class Purchase_model extends CI_Model
         "delivery_note_date"=>$this->input->post("delevery_note_date"),
         "sub_total"=>$this->input->post("sub_total_amount"),
         "total_discount"=>$this->input->post("total_discount_amount"),
+        "taxable_amount"=>$this->input->post("taxable_amount"),
         "total_igst"=>$this->input->post("tigst"),
         "total_cgst"=>$this->input->post("tcgst"),
         "total_sgst"=>$this->input->post("tsgst"),
@@ -237,6 +240,7 @@ class Purchase_model extends CI_Model
                 $itemData["total_cost"] = $product_item['total_amount'];
                 $itemData["discount"] = $product_item['discount_percent'];
                 $itemData["discount_amount"] = $product_item['discount_amount'];
+                $itemData["taxable_amount"] = $product_item['taxable_amount'];
                 $itemData["cgst"] = $product_item['tax_cgst_amount'];
                 $itemData["cgst_amount"] = $product_item['tax_cgst_amount'];
                 $itemData["igst"] = $product_item['tax_igst_percent'];

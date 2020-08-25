@@ -15,4 +15,6 @@ ALTER TABLE `purchases` ADD `deleted_by` INT(11) NULL DEFAULT NULL AFTER `delete
 
 ALTER TABLE `suppliers` DROP `supplier_address_s`, DROP `supplier_city_s`, DROP `supplier_state_s`, DROP `supplier_country_s`, DROP `supplier_zip_s`;
 ALTER TABLE `products` ADD `unit_cost_exclude_gst` DECIMAL(10,2) NOT NULL AFTER `salling_price`, ADD `salling_price_exclude_gst` DECIMAL(10,2) NOT NULL AFTER `unit_cost_exclude_gst`;
-ALTER TABLE `product_histories` ADD `unit_cost_exclude_gst` DECIMAL(10,2) NOT NULL AFTER `salling_price`, ADD `salling_price_exclude_gst` DECIMAL(10,2) NOT NULL AFTER `unit_cost_exclude_gst`
+ALTER TABLE `product_histories` ADD `unit_cost_exclude_gst` DECIMAL(10,2) NOT NULL AFTER `salling_price`, ADD `salling_price_exclude_gst` DECIMAL(10,2) NOT NULL AFTER `unit_cost_exclude_gst`;
+ALTER TABLE `purchases` ADD `taxable_amount` DECIMAL(10,2) NULL DEFAULT NULL AFTER `total_discount`;
+ALTER TABLE `purchase_items` ADD `taxable_amount` DECIMAL(10,2) NULL DEFAULT NULL AFTER `discount_amount`;

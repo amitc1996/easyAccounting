@@ -232,6 +232,18 @@ $tsgst = array(
   'readonly'=>'readonly',
   'data-parsley-required'=>'true',
 );
+$taxable_amount = array(
+  'name'  => 'taxable_amount',
+  'id'  => 'taxable_amount',
+  'value' => set_value('taxable_amount'),
+  'class'=>'form-control',
+  'placeholder'=>'0',
+  'type'=>'number',
+  'min'=>'0',
+  'step'=>'0.01',
+  'readonly'=>'readonly',
+  'data-parsley-required'=>'true',
+);
 $i=0;
 ?>
 <style type="text/css">
@@ -377,6 +389,7 @@ $i=0;
                         <th style="width: 100px;">Quantity</th>
                         <th style="width: 100px;">Sub Total</th>
                         <th colspan="2" style="width: 350px;">Discount</th>
+                        <th style="width: 100px;">Taxable Amount</th>
                         <th colspan="2" style="width: 400px;">IGST</th>
                         <th colspan="2" style="width: 400px;">CGST</th>
                         <th colspan="2" style="width: 400px;">SGST</th>
@@ -420,6 +433,16 @@ $i=0;
                      <?php  echo form_input($total_discount_amount); ?>
                     </div>
                     <label class="pull-right control-label">Total Discount:</label>
+                   </div>
+                 </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="form-group total_amt">
+                    <div class="pull-right">
+                     <?php  echo form_input($taxable_amount); ?>
+                    </div>
+                    <label class="pull-right control-label">Taxable Amount:</label>
                    </div>
                  </td>
                 </tr>
@@ -537,7 +560,6 @@ $i=0;
                        var selected =(item_data.measurement==value.measurement_id)?'selected':'';
                        unit_option+='<option '+selected+' value="'+value.measurement_id+'">'+value.measurement_name+'</option>';
                    }); 
-
                 var item_data=`<tr class="${rowCount} item_row" id="row_${rowCount}">
                      <input type="hidden" value="${item_data.product_id}" count="${rowCount}" id="product_id_${rowCount}" name="item[${rowCount}][product_id]">
                      <input class="form-control discount_name_inp" count="${rowCount}" type="hidden" id="discount_name_${rowCount}" value="" name="item[${rowCount}][discount_name]">
@@ -556,7 +578,7 @@ $i=0;
                      <td><input  class="form-control price_discount_percent" count="${rowCount}" name="item[${rowCount}][discount_percent]" id="discount_percent_${rowCount}" type="text" value="${item_data.discount}"></td>
 
                       <td><input  class="form-control price_discount_amount hidden_info" count="${rowCount}" name="item[${rowCount}][discount_amount]" id="discount_amount_${rowCount}" type="text" value="${item_data.discount_amount}"></td>
-
+                    <td><input  class="form-control price_taxable_amount" count="${rowCount}" name="item[${rowCount}][taxable_amount]" id="taxable_amount_${rowCount}" type="text" value="${item_data.taxable_amount}"></td>
                       
                      <td><input class="form-control price_igst_percent" count="${rowCount}" name="item[${rowCount}][tax_igst_percent]" id="tax_igst_percent_${rowCount}" type="text" value="${item_data.igst}"></td>
                      <td><input class="form-control price_tax_igst_amount hidden_info" count="${rowCount}" name="item[${rowCount}][tax_igst_amount]" id="tax_igst_amount_${rowCount}" type="text" value="${item_data.igst_amount}"></td>
@@ -751,6 +773,7 @@ $("#item_title").autocomplete({
 
                       
                      <td><input class="form-control price_igst_percent" count="${rowCount}" name="item[${rowCount}][tax_igst_percent]" id="tax_igst_percent_${rowCount}" type="text" value="${result[0].igst}"></td>
+
                      <td><input class="form-control price_tax_igst_amount hidden_info" count="${rowCount}" name="item[${rowCount}][tax_igst_amount]" id="tax_igst_amount_${rowCount}" type="text" value="0"></td>
 
                      <td><input class="form-control price_cgst_percent" count="${rowCount}" name="item[${rowCount}][tax_cgst_percent]" id="tax_cgst_percent_${rowCount}" type="text" value="${result[0].cgst}"></td>
@@ -786,6 +809,7 @@ $("#item_title").autocomplete({
       //get unitcost and qty value
       var unit_cost=$('#unit_cost_'+rowCount).val();
       var item_qty=$('#item_qty_'+rowCount).val();
+      var all_price_taxable_inp=$('.price_taxable_amount');
       
       if (($.isNumeric(unit_cost)&&unit_cost>0)&&($.isNumeric(item_qty)&&item_qty>0)) 
           {
@@ -800,6 +824,7 @@ $("#item_title").autocomplete({
       $('#discount_amount_'+rowCount).val(discount_amount);
 
       amount_after_discount  =  subtotal-discount_amount;
+       $('#taxable_amount_'+rowCount).val(amount_after_discount);
       //perform tax igst
       var igst_percent=$('#tax_igst_percent_'+rowCount).val();
       igst_amount=amount_after_discount*igst_percent/100;
@@ -848,6 +873,7 @@ $("#item_title").autocomplete({
     var total_igstprice=0.00;
     var total_cgstprice=0.00;
     var total_sgstprice=0.00;
+    var total_taxableprice=0.00;
 
     $.each(all_price_total_inp,function (i,v){
       total_price=total_price+parseFloat($(v).val());
@@ -874,8 +900,13 @@ $("#item_title").autocomplete({
       total_sgstprice=total_sgstprice+parseFloat($(v).val());
     })
 
+       $.each(all_price_taxable_inp,function (i,v){
+      total_taxableprice=total_taxableprice+parseFloat($(v).val());
+    })
+
     $('#sub_total_amount').val(total_price.toFixed(2));
     $('#total_discount_amount').val(total_discount.toFixed(2));
+    $('#taxable_amount').val(total_taxableprice.toFixed(2));
     $('#tigst').val(total_igstprice.toFixed(2));
     $('#tcgst').val(total_cgstprice.toFixed(2));
     $('#tsgst').val(total_sgstprice.toFixed(2));

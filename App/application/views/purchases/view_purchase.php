@@ -1,4 +1,5 @@
 <?php
+
 if($details)
 {
   $purchase_details = $details['purchase_details'][0];
@@ -92,6 +93,7 @@ if($details)
               <th>Qty</th>
               <th>Subtotal</th>
               <th colspan="2">Discount</th>
+              <th>Taxable Amount</th>
               <th colspan="2">IGST</th>
               <th colspan="2">CGST</th>
               <th colspan="2">SGST</th>
@@ -112,6 +114,7 @@ if($details)
               <td><?php echo $purchase_item['total_cost'];?></td>
               <td><?php echo $purchase_item['discount'];?></td>
               <td><?php echo $purchase_item['discount_amount'];?></td>
+              <td><?php echo $purchase_item['taxable_amount'];?></td>
               <td><?php echo $purchase_item['igst'];?></td>
               <td><?php echo $purchase_item['igst_amount'];?></td>
               <td><?php echo $purchase_item['cgst'];?></td>
@@ -148,6 +151,10 @@ if($details)
               <tr>
                 <th>Total Discount:</th>
                 <td><?php echo $purchase_details['total_discount'];?></td>
+              </tr>
+               <tr>
+                <th>Taxable Amount:</th>
+                <td><?php echo $purchase_details['taxable_amount'];?></td>
               </tr>
               <tr>
                 <th>Total IGST:</th>
